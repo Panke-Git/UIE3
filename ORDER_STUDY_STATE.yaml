@@ -1,0 +1,202 @@
+protocol_name: adaptive_non_commutative_order_study
+protocol_version: 1.0.0
+state_schema_version: 1
+
+workspace:
+  root: UIE3_workspace
+  upstream_nafnet: NAFNet
+  project_repo: UIE3
+  upstream_access: read_only
+  project_access: writable
+
+git:
+  upstream_commit: null
+  project_commit: null
+  project_branch: null
+  accepted_previous_commit: null
+  phase_start_commit: null
+  clean_worktree_required: false
+  notes: "Phase A must record current status; it must not overwrite existing user changes."
+
+current_phase:
+  id: A
+  name: nafnet_minimal_import_audit
+  status: not_started
+  authorized: true
+  next_phase_authorized: false
+
+phase_permissions:
+  readable_paths:
+    - NAFNet/**
+    - UIE3/**
+  writable_paths:
+    - UIE3/NAFNET_IMPORT_AUDIT.md
+  forbidden_actions:
+    - modify_upstream_nafnet
+    - copy_source_code
+    - implement_nafnet
+    - implement_nafnet_small
+    - implement_color_operator
+    - implement_scattering_operator
+    - implement_order_model
+    - implement_router
+    - install_dependencies
+    - download_weights
+    - launch_training
+    - auto_advance_phase
+
+phase_outputs:
+  required:
+    - UIE3/NAFNET_IMPORT_AUDIT.md
+  optional: []
+
+phase_acceptance:
+  required_audit_status:
+    - READY_FOR_MINIMAL_IMPORT
+    - BLOCKED
+    - NEEDS_HUMAN_DECISION
+  human_review_required: true
+  phase_report_required: false
+  git_commit_required_before_next_phase: true
+
+research:
+  task: paired_underwater_image_enhancement
+  target_venue: ICASSP_2027
+  primary_hardware: RTX_3060_12GB
+  primary_metric_for_oracle: RGB_PSNR
+
+nafnet_small:
+  status: planned_not_implemented
+  official_model_name: false
+  img_channel: 3
+  width: 32
+  enc_blk_nums: [2, 2, 2]
+  middle_blk_num: 4
+  dec_blk_nums: [2, 2, 2]
+  preserve_official_global_residual: true
+  forbid_duplicate_global_residual: true
+
+operator_order:
+  insertion_position: pre_backbone
+  full_names_only: true
+  color_then_scatter:
+    execution:
+      - ColorCorrectionOperator
+      - ScatteringRemovalOperator
+      - NAFNetSmall
+  scatter_then_color:
+    execution:
+      - ScatteringRemovalOperator
+      - ColorCorrectionOperator
+      - NAFNetSmall
+
+planned_operator_defaults:
+  color:
+    hidden: 16
+    matrix_scale: 0.10
+    bias_scale: 0.05
+    identity_initialization: true
+  scattering:
+    hidden: 16
+    transmission_min: 0.20
+    initial_transmission: 0.95
+    initial_background_light: 0.50
+    eps: 1.0e-6
+    max_residual: 0.10
+    identity_initialization: true
+
+experimental_protocol:
+  dataset:
+    name: null
+    train_split: null
+    validation_split: null
+    test_split: null
+    status: unresolved_pending_audit
+  image_range:
+    input: null
+    target: null
+    status: unresolved_pending_audit
+  metrics:
+    psnr:
+      implementation: null
+      color_space: null
+      data_range: null
+      clamp_before_metric: null
+      crop_border: null
+      status: unresolved_pending_audit
+    ssim:
+      implementation: null
+      color_space: null
+      data_range: null
+      clamp_before_metric: null
+      crop_border: null
+      status: unresolved_pending_audit
+    lpips:
+      available: null
+      evaluation_only: true
+      status: unresolved_pending_audit
+  loss:
+    main_reconstruction_loss: null
+    status: unresolved_pending_audit
+  checkpoint:
+    selection_metric: null
+    resume_supported: null
+    status: unresolved_pending_audit
+  seeds:
+    development:
+      - 3407
+    formal:
+      - 3407
+      - 1234
+      - 2027
+
+gates:
+  order_hypothesis:
+    status: not_run
+    thresholds:
+      minimum_oracle_gap_db: 0.10
+      minimum_minority_route_ratio: 0.15
+      minimum_cross_seed_agreement: 0.67
+      route_margin_db: 0.05
+      require_bootstrap_ci_lower_gt_zero: true
+      maximum_top5_contribution_ratio: 0.50
+  route_predictability:
+    status: not_run
+    thresholds:
+      minimum_balanced_accuracy_gain_over_majority: 0.05
+      minimum_minority_recall: 0.40
+      minimum_restoration_gain_db: 0.05
+
+completed:
+  protocol_initialized: true
+  decisions_initialized: true
+  state_initialized: true
+  nafnet_import_audit: false
+  nafnet_minimal_import: false
+  baseline_smoke_test: false
+  color_operator_smoke_test: false
+  scattering_operator_smoke_test: false
+  shared_order_diagnostic: false
+  formal_multi_seed_order_test: false
+  order_gate: false
+  oof_route_labels: false
+  selector_test: false
+  route_gate: false
+  adaptive_hard: false
+  final_experiment_matrix: false
+
+blocking_unknowns:
+  - exact_UIE3_repository_structure
+  - official_NAFNet_commit_and_license_dependencies
+  - exact_dataset_split
+  - input_and_target_value_range
+  - PSNR_definition
+  - SSIM_definition
+  - checkpoint_selection_rule
+  - existing_NAFNet_or_model_registry
+  - existing_training_and_evaluation_entrypoints
+
+notes:
+  - "Before Phase A, copy this file, ORDER_STUDY_PROTOCOL.md, and ORDER_STUDY_DECISIONS.md into the UIE3 repository root."
+  - "Phase A may populate NAFNET_IMPORT_AUDIT.md but must not silently edit this state file."
+  - "After human acceptance, update commit fields and explicitly authorize Phase B."
