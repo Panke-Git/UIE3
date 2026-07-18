@@ -254,3 +254,37 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific conclusion:
   No UIE or order-study conclusion has been obtained.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0011
+
+- Date: 2026-07-18
+- Status: Accepted
+- Decision: Accept Phase B1b cloud runtime validation.
+- Phase B1b status: PASS
+- Evidence:
+  - 8 tests passed;
+  - max absolute error = 0;
+  - mean absolute error = 0;
+  - official and imported parameter count = 2,846,755;
+  - forward, backward, padding, cropping, state_dict compatibility and
+    global residual tests passed.
+- Authorized next phase:
+  Phase B2a — LSUI dataset and split protocol audit.
+- Phase B2a scope:
+  - inspect the real LSUI directory;
+  - verify paired input/GT integrity;
+  - determine exact train/validation/test semantics;
+  - freeze a deterministic split protocol;
+  - do not implement training code.
+- Explicitly not authorized:
+  - color operator;
+  - scattering operator;
+  - order model;
+  - router;
+  - formal training.
+- Scientific conclusion:
+  NAFNet import equivalence is verified, but no UIE performance conclusion
+  has been obtained.
+- Human approver: Repository owner

@@ -19,8 +19,8 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B1b
-  name: nafnet_cloud_runtime_validation
+  id: B2a
+  name: lsui_dataset_and_split_audit
   status: not_started
   authorized: true
   next_phase_authorized: false
@@ -30,26 +30,26 @@ phase_permissions:
     - NAFNet/**
     - UIE3/**
   writable_paths:
-    - UIE3/reports/runtime/**
-    - UIE3/reports/PHASE_B1B_REPORT.md
+    - UIE3/DATASET_AUDIT.md
+    - UIE3/reports/PHASE_B2A_REPORT.md
   forbidden_actions:
     - modify_upstream_nafnet
     - modify_nafnet_implementation
-    - implement_dataset
+    - implement_dataset_loader
     - implement_training_framework
+    - implement_metrics
+    - implement_loss
     - implement_color_operator
     - implement_scattering_operator
     - implement_order_model
     - implement_router
-    - download_weights
     - launch_training
     - auto_advance_phase
 
 phase_outputs:
   required:
-    - UIE3/reports/runtime/phase_b1b_environment.txt
-    - UIE3/reports/runtime/phase_b1b_test.log
-    - UIE3/reports/PHASE_B1B_REPORT.md
+    - UIE3/DATASET_AUDIT.md
+    - UIE3/reports/PHASE_B2A_REPORT.md
   optional: []
 
 phase_acceptance:
