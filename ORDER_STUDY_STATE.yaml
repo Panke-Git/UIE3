@@ -19,8 +19,8 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B1a
-  name: nafnet_minimal_import_static_implementation
+  id: B1b
+  name: nafnet_cloud_runtime_validation
   status: not_started
   authorized: true
   next_phase_authorized: false
@@ -30,17 +30,11 @@ phase_permissions:
     - NAFNet/**
     - UIE3/**
   writable_paths:
-    - UIE3/third_party/nafnet/**
-    - UIE3/src/__init__.py
-    - UIE3/src/models/__init__.py
-    - UIE3/src/models/backbones/__init__.py
-    - UIE3/src/models/backbones/nafnet_small.py
-    - UIE3/tests/test_nafnet_import.py
-    - UIE3/reports/PHASE_B1A_REPORT.md
+    - UIE3/reports/runtime/**
+    - UIE3/reports/PHASE_B1B_REPORT.md
   forbidden_actions:
     - modify_upstream_nafnet
-    - install_dependencies
-    - execute_pytorch_tests
+    - modify_nafnet_implementation
     - implement_dataset
     - implement_training_framework
     - implement_color_operator
@@ -53,17 +47,10 @@ phase_permissions:
 
 phase_outputs:
   required:
-    - UIE3/third_party/nafnet/nafnet_arch.py
-    - UIE3/third_party/nafnet/LICENSE
-    - UIE3/third_party/nafnet/UPSTREAM.md
-    - UIE3/src/models/backbones/nafnet_small.py
-    - UIE3/tests/test_nafnet_import.py
-    - UIE3/reports/PHASE_B1A_REPORT.md
-  optional:
-    - UIE3/third_party/nafnet/__init__.py
-    - UIE3/src/__init__.py
-    - UIE3/src/models/__init__.py
-    - UIE3/src/models/backbones/__init__.py
+    - UIE3/reports/runtime/phase_b1b_environment.txt
+    - UIE3/reports/runtime/phase_b1b_test.log
+    - UIE3/reports/PHASE_B1B_REPORT.md
+  optional: []
 
 phase_acceptance:
   required_audit_status:

@@ -227,3 +227,30 @@ Do not delete earlier entries. Append new entries chronologically.
 - Authorized phase after this decision:
   Phase B1a — NAFNet minimal import static implementation.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0010
+
+- Date: 2026-07-18
+- Status: Accepted
+- Decision: Accept Phase B1a static NAFNet import implementation.
+- Phase B1a status: IMPLEMENTED_NOT_RUNTIME_VALIDATED
+- Authorized next phase:
+  Phase B1b — cloud runtime equivalence validation.
+- Phase B1b scope:
+  - run official-versus-imported numerical equivalence tests;
+  - run forward and backward tests;
+  - validate padding, cropping, state_dict compatibility and global residual;
+  - record the actual cloud environment and raw test output.
+- Explicitly not authorized:
+  - dataset implementation;
+  - training framework;
+  - UIE training;
+  - color operator;
+  - scattering operator;
+  - order model;
+  - routing.
+- Scientific conclusion:
+  No UIE or order-study conclusion has been obtained.
+- Human approver: Repository owner
