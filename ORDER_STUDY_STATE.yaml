@@ -19,8 +19,8 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B1
-  name: nafnet_minimal_import
+  id: B1a
+  name: nafnet_minimal_import_static_implementation
   status: not_started
   authorized: true
   next_phase_authorized: false
@@ -36,16 +36,17 @@ phase_permissions:
     - UIE3/src/models/backbones/__init__.py
     - UIE3/src/models/backbones/nafnet_small.py
     - UIE3/tests/test_nafnet_import.py
-    - UIE3/reports/PHASE_B1_REPORT.md
+    - UIE3/reports/PHASE_B1A_REPORT.md
   forbidden_actions:
     - modify_upstream_nafnet
+    - install_dependencies
+    - execute_pytorch_tests
+    - implement_dataset
+    - implement_training_framework
     - implement_color_operator
     - implement_scattering_operator
     - implement_order_model
     - implement_router
-    - implement_dataset
-    - implement_training_framework
-    - implement_metrics
     - download_weights
     - launch_training
     - auto_advance_phase

@@ -172,3 +172,29 @@ Do not delete earlier entries. Append new entries chronologically.
 - Invalidated experiments: None.
 - Required reruns: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0008
+
+- Date: 2026-07-18
+- Status: Accepted
+- Decision: Split Phase B1 into a local static implementation phase and a cloud runtime validation phase.
+- Reason:
+  - Codex runs on the local MacBook environment;
+  - the local Python 3.9.6 environment does not contain PyTorch;
+  - formal code execution and later experiments will run in the cloud environment;
+  - installing or changing dependencies was not authorized in the original Phase B1 prompt.
+- Phase B1a:
+  - implement the minimal NAFNet import;
+  - create the NAFNet-small wrapper;
+  - create equivalence tests;
+  - perform syntax and static checks only;
+  - do not claim runtime equivalence.
+- Phase B1b:
+  - run the equivalence, forward, backward, padding and residual tests in a cloud environment with PyTorch;
+  - record actual runtime results.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Required reruns: Phase B1 runtime validation must be completed in the cloud.
+- Human approver: Repository owner
