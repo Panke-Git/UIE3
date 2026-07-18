@@ -288,3 +288,38 @@ Do not delete earlier entries. Append new entries chronologically.
   NAFNet import equivalence is verified, but no UIE performance conclusion
   has been obtained.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0012
+
+- Date: 2026-07-18
+- Status: Accepted
+- Decision: Execute Phase B2a as a static audit-tool implementation followed
+  by cloud dataset execution and deterministic split generation.
+- Context:
+  - Codex runs on the local MacBook;
+  - LSUI19 exists only in the cloud environment;
+  - local Codex cannot directly inspect
+    `/root/autodl-tmp/pro/publicdata/LSUI19`.
+- Dataset snapshot observed:
+  - Train/input: 3851
+  - Train/GT: 3851
+  - Val/input: 428
+  - Val/GT: 428
+- Intended split semantics:
+  - original Train is the development pool;
+  - 3466 samples are used for training;
+  - 385 samples are used for validation;
+  - original Val is held out as the 428-sample final test set.
+- Split seed: 3407
+- Pair key: exact filename stem
+- Images will not be copied or moved.
+- Required artifacts:
+  - reproducible audit tool;
+  - machine-readable audit result;
+  - fixed train/validation/test manifests;
+  - dataset audit report.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Human approver: Repository owner

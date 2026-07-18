@@ -30,11 +30,19 @@ phase_permissions:
     - NAFNet/**
     - UIE3/**
   writable_paths:
+    - UIE3/tools/audit_lsui19.py
+    - UIE3/reports/runtime/lsui19_dataset_audit.json
+    - UIE3/reports/runtime/lsui19_dataset_audit.log
+    - UIE3/splits/lsui19/train.tsv
+    - UIE3/splits/lsui19/validation.tsv
+    - UIE3/splits/lsui19/test.tsv
+    - UIE3/splits/lsui19/SPLIT_METADATA.json
     - UIE3/DATASET_AUDIT.md
     - UIE3/reports/PHASE_B2A_REPORT.md
   forbidden_actions:
     - modify_upstream_nafnet
     - modify_nafnet_implementation
+    - copy_or_move_dataset_images
     - implement_dataset_loader
     - implement_training_framework
     - implement_metrics
@@ -48,6 +56,13 @@ phase_permissions:
 
 phase_outputs:
   required:
+    - UIE3/tools/audit_lsui19.py
+    - UIE3/reports/runtime/lsui19_dataset_audit.json
+    - UIE3/reports/runtime/lsui19_dataset_audit.log
+    - UIE3/splits/lsui19/train.tsv
+    - UIE3/splits/lsui19/validation.tsv
+    - UIE3/splits/lsui19/test.tsv
+    - UIE3/splits/lsui19/SPLIT_METADATA.json
     - UIE3/DATASET_AUDIT.md
     - UIE3/reports/PHASE_B2A_REPORT.md
   optional: []
