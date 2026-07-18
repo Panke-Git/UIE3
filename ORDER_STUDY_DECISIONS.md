@@ -142,3 +142,33 @@ Do not delete earlier entries. Append new entries chronologically.
 - Invalidated experiments:
 - Required reruns:
 - Human approver:
+---
+
+## Decision D-0007
+
+- Date: 2026-07-18
+- Status: Accepted
+- Decision: Accept the Phase A NAFNet minimal import audit.
+- Audit result: READY_FOR_MINIMAL_IMPORT
+- Accepted upstream commit:
+  `2b4af71ebe098a92a75910c233a3965a3e93ede4`
+- Authorized next phase:
+  Phase B1 — minimal ordinary NAFNet import and numerical equivalence tests.
+- Phase B1 scope:
+  - import only the five audited architecture symbols;
+  - preserve licenses and provenance;
+  - create the project-specific NAFNet-small wrapper;
+  - run official-versus-imported equivalence tests.
+- Explicitly not authorized:
+  - dataset implementation;
+  - training framework;
+  - color operator;
+  - scattering operator;
+  - order model;
+  - routing;
+  - long training.
+- Scientific conclusion:
+  No experimental or restoration conclusion has been obtained.
+- Invalidated experiments: None.
+- Required reruns: None.
+- Human approver: Repository owner
