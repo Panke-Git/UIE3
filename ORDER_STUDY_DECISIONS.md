@@ -198,3 +198,32 @@ Do not delete earlier entries. Append new entries chronologically.
 - Invalidated experiments: None.
 - Required reruns: Phase B1 runtime validation must be completed in the cloud.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0009
+
+- Date: 2026-07-18
+- Status: Accepted
+- Decision: Make `ORDER_STUDY_PROTOCOL.md` phase-independent and designate
+  `ORDER_STUDY_STATE.yaml` as the sole source of truth for the current phase,
+  writable paths, and required outputs.
+- Context:
+  - Phase B1a was blocked because the protocol still contained Phase A-specific
+    authorization language.
+  - `phase_permissions.writable_paths` required
+    `reports/PHASE_B1A_REPORT.md`, while `phase_outputs.required` still required
+    `reports/PHASE_B1_REPORT.md`.
+- Resolution:
+  - protocol version increased from 1.0.0 to 1.0.1;
+  - current phase is no longer hard-coded in the protocol;
+  - Phase B1a report path is unified as
+    `UIE3/reports/PHASE_B1A_REPORT.md`;
+  - `ORDER_STUDY_STATE.yaml` is the sole phase-control source.
+- Scientific semantics changed: No.
+- Model semantics changed: No.
+- Invalidated experiments: None.
+- Required reruns: None.
+- Authorized phase after this decision:
+  Phase B1a — NAFNet minimal import static implementation.
+- Human approver: Repository owner

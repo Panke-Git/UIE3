@@ -3,15 +3,25 @@
 ## 1. Document status
 
 - Protocol name: Adaptive Non-Commutative Operator Ordering for Underwater Image Enhancement
-- Protocol version: 1.0.0
+- Protocol version: 1.0.1
 - Repository: `UIE3_workspace/UIE3`
 - Read-only upstream repository: `UIE3_workspace/NAFNet`
-- Current authorized phase: Phase A — NAFNet minimal import audit
+- Current authorized phase: Defined exclusively by `ORDER_STUDY_STATE.yaml`
 - Primary hardware target: NVIDIA RTX 3060 12 GB
 - Intended venue: ICASSP 2027
 - Status: Active research protocol
 
 This document is the canonical scientific and engineering specification for the project. Codex may implement only the phase explicitly authorized in `ORDER_STUDY_STATE.yaml`. Any change that affects the scientific meaning of an experiment must be recorded in `ORDER_STUDY_DECISIONS.md` and must increment `protocol_version`.
+
+`ORDER_STUDY_PROTOCOL.md` is phase-independent. It defines stable scientific
+and engineering invariants only.
+
+The current phase, writable paths, required outputs, and advancement
+authorization are defined exclusively by `ORDER_STUDY_STATE.yaml`.
+
+If this protocol contains a historical phase example that conflicts with
+`ORDER_STUDY_STATE.yaml`, the historical example must be corrected before
+execution. Codex must not resolve such a conflict autonomously.
 
 ---
 
@@ -196,13 +206,28 @@ UIE3_workspace/
 
 Codex must validate the paths before acting.
 
-Current Phase A allows creation or modification of only:
+Writable paths are phase-specific and are defined exclusively in
+`ORDER_STUDY_STATE.yaml` under:
 
-```text
-UIE3/NAFNET_IMPORT_AUDIT.md
-```
+- `phase_permissions.writable_paths`
 
-The three protocol-control files themselves are human-supplied inputs and must not be rewritten during Phase A unless explicitly authorized.
+Required outputs are phase-specific and are defined exclusively in
+`ORDER_STUDY_STATE.yaml` under:
+
+- `phase_outputs.required`
+
+The current Codex prompt may narrow these permissions but may not expand
+them.
+
+The following governance files may be modified only by explicit human
+authorization:
+
+- `ORDER_STUDY_PROTOCOL.md`
+- `ORDER_STUDY_DECISIONS.md`
+- `ORDER_STUDY_STATE.yaml`
+
+Codex must not update the current phase, authorize the next phase, or alter
+the research protocol automatically.
 
 ---
 
@@ -617,11 +642,12 @@ All per-image results must be saved. Reporting only the best seed is prohibited.
 
 ## 20. Required phase reports
 
-Each phase must produce:
+Each phase must produce the report file declared for that phase in
+`ORDER_STUDY_STATE.yaml` under `phase_outputs.required`.
 
-```text
-reports/PHASE_<LETTER>_REPORT.md
-```
+The exact report filename is phase-specific. Examples may include
+`PHASE_A_REPORT.md`, `PHASE_B1A_REPORT.md`, or `PHASE_C_REPORT.md`, but the
+state file is the sole source of truth.
 
 Each report must include:
 
