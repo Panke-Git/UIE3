@@ -1,0 +1,169 @@
+{
+  "audit_status": "PASS",
+  "content_hash_semantics": {
+    "algorithm": "SHA256(schema + NUL + width:uint64be + height:uint64be + Pillow-decoded RGB pixel bytes in row-major order)",
+    "pair_algorithm": "SHA256(pair-schema + NUL + binary decoded-RGB input digest + binary decoded-RGB GT digest)",
+    "pair_schema": "LSUI19_DECODED_RGB_PAIR_V1",
+    "schema": "LSUI19_DECODED_RGB_V1"
+  },
+  "dataset_file_list_fingerprint": {
+    "algorithm": "SHA256 over UTF-8 JSON lines [root-relative-path, byte-size, kind], sorted by root-relative path bytes",
+    "entry_count": 8558,
+    "sha256": "33e9c4a8e759438edbda43353663810723c4e8af3c796dc6c682904c75c8ba55"
+  },
+  "dataset_identifier": "LSUI19",
+  "duplicate_content_summary": {
+    "decoded_rgb_gt_duplicate_group_count": 46,
+    "decoded_rgb_input_duplicate_group_count": 36,
+    "forced_formal_train_sample_count": 112
+  },
+  "exact_split_algorithm": {
+    "forced_formal_train_definition": "Union of Train sample_ids in any decoded-RGB input duplicate group or decoded-RGB GT duplicate group",
+    "manifest_row_order": "natural ascending sample_id order; independent of ranking order",
+    "ranking_expression": "sha256(\"LSUI19|3407|<sample_id>\")",
+    "ranking_order": "ascending hexadecimal digest; sample_id byte order breaks impossible digest ties",
+    "test_selection": "all original Val sample_ids",
+    "train_selection": "all remaining Train-pool sample_ids",
+    "validation_candidates": "all physical Train sample_ids minus forced_formal_train sample_ids",
+    "validation_selection": "first 385 ranked validation-candidate sample_ids"
+  },
+  "forced_formal_train_manifest_sha256": "ae2430f6be1a5ce79ba9a4e95da04ca416d23e70fb75a739bf31b3e06ad7d3d0",
+  "formal_counts": {
+    "test": 428,
+    "train": 3466,
+    "validation": 385
+  },
+  "formal_split_validation": {
+    "complete_sample_coverage": {
+      "expected_total_sample_count": 4279,
+      "manifest_total_row_count": 4279,
+      "manifest_unique_sample_count": 4279,
+      "missing_sample_ids": [],
+      "passed": true,
+      "physical_unique_sample_count": 4279,
+      "unexpected_sample_ids": []
+    },
+    "count_checks": {
+      "test": {
+        "expected": 428,
+        "observed": 428,
+        "passed": true
+      },
+      "train": {
+        "expected": 3466,
+        "observed": 3466,
+        "passed": true
+      },
+      "validation": {
+        "expected": 385,
+        "observed": 385,
+        "passed": true
+      }
+    },
+    "decoded_rgb_hash_overlap_checks": {
+      "train_vs_test": {
+        "gt_decoded_rgb_hash_overlap_count": 0,
+        "gt_decoded_rgb_hash_overlaps": [],
+        "input_decoded_rgb_hash_overlap_count": 0,
+        "input_decoded_rgb_hash_overlaps": [],
+        "passed": true
+      },
+      "train_vs_validation": {
+        "gt_decoded_rgb_hash_overlap_count": 0,
+        "gt_decoded_rgb_hash_overlaps": [],
+        "input_decoded_rgb_hash_overlap_count": 0,
+        "input_decoded_rgb_hash_overlaps": [],
+        "passed": true
+      },
+      "validation_vs_test": {
+        "gt_decoded_rgb_hash_overlap_count": 0,
+        "gt_decoded_rgb_hash_overlaps": [],
+        "input_decoded_rgb_hash_overlap_count": 0,
+        "input_decoded_rgb_hash_overlaps": [],
+        "passed": true
+      }
+    },
+    "forced_formal_train_assignment": {
+      "forced_formal_train_count": 112,
+      "missing_from_train": [],
+      "passed": true,
+      "present_in_test": [],
+      "present_in_validation": []
+    },
+    "sample_id_overlap_checks": {
+      "train_vs_test": {
+        "count": 0,
+        "passed": true,
+        "sample_ids": []
+      },
+      "train_vs_validation": {
+        "count": 0,
+        "passed": true,
+        "sample_ids": []
+      },
+      "validation_vs_test": {
+        "count": 0,
+        "passed": true,
+        "sample_ids": []
+      }
+    },
+    "status": "PASS",
+    "validation_candidate_membership": {
+      "passed": true,
+      "validation_candidate_count": 3739,
+      "validation_outside_candidates": []
+    }
+  },
+  "generation_timestamp_utc": "2026-07-20T15:44:45Z",
+  "hash_files_enabled": true,
+  "manifest_sha256": {
+    "test.tsv": "cee6a22aeb2903f1cd053f641eab3aa1733f55a394682e257cb4ab4b27b0373c",
+    "train.tsv": "5cf9be63b7ed565ad3190936c61efe56c7b27c1e0cb7d8b0c9266ef62f87c6ab",
+    "validation.tsv": "e81c35ae694ce9c0e2ba656ad5dece093ae7804d4ffd711eeb357103686f9c18"
+  },
+  "observed_root_basename": "LSUI19_dup_train",
+  "physical_counts": {
+    "Train": {
+      "GT": 3851,
+      "input": 3851,
+      "pairs": 3851
+    },
+    "Val": {
+      "GT": 428,
+      "input": 428,
+      "pairs": 428
+    }
+  },
+  "schema_version": "1.0",
+  "source_directory_semantics": {
+    "Train/GT": "ground truth paired to Train/input by exact filename stem",
+    "Train/input": "degraded inputs for the Train pool",
+    "Val/GT": "ground truth paired to Val/input by exact filename stem",
+    "Val/input": "degraded inputs held out wholly as test"
+  },
+  "split_hash_overlap_validation": {
+    "train_vs_test": {
+      "gt_decoded_rgb_hash_overlap_count": 0,
+      "gt_decoded_rgb_hash_overlaps": [],
+      "input_decoded_rgb_hash_overlap_count": 0,
+      "input_decoded_rgb_hash_overlaps": [],
+      "passed": true
+    },
+    "train_vs_validation": {
+      "gt_decoded_rgb_hash_overlap_count": 0,
+      "gt_decoded_rgb_hash_overlaps": [],
+      "input_decoded_rgb_hash_overlap_count": 0,
+      "input_decoded_rgb_hash_overlaps": [],
+      "passed": true
+    },
+    "validation_vs_test": {
+      "gt_decoded_rgb_hash_overlap_count": 0,
+      "gt_decoded_rgb_hash_overlaps": [],
+      "input_decoded_rgb_hash_overlap_count": 0,
+      "input_decoded_rgb_hash_overlaps": [],
+      "passed": true
+    }
+  },
+  "split_seed": 3407,
+  "validation_count": 385
+}

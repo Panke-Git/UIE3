@@ -1,0 +1,23 @@
+LSUI19 paired dataset audit
+Status: PASS
+Observed root basename: LSUI19_dup_train
+Decoded-RGB hashing enabled: True
+Image counts:
+  Train/input: 3851
+  Train/GT: 3851
+  Val/input: 428
+  Val/GT: 428
+Train pairs: 3851 unique; missing GT=0; missing input=0; size mismatches=0; RGB-conversion failures=0
+Val pairs: 428 unique; missing GT=0; missing input=0; size mismatches=0; RGB-conversion failures=0
+Train/Val overlapping stems: 0
+Physical Train/Val decoded-RGB hash overlap groups: input=0; GT=0; full pairs=0
+Train decoded-RGB duplicate groups: input=36; GT=46; forced formal train samples=112
+Val decoded-RGB duplicate groups (required 0): input=0; GT=0
+Formal split validation: PASS
+Formal counts: train=3466; validation=385; test=428
+Formal cross-split decoded-RGB overlap groups: input=0; GT=0
+Formal manifest sample coverage: unique=4279; rows=4279; expected=4279
+Blocking failures: 0
+Warnings: 0
+Formal manifests generated: True
+Manifest note: Audit passed and all formal split manifests were written.
