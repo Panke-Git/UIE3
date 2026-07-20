@@ -21,7 +21,6 @@ git:
 current_phase:
   id: B2a
   name: lsui_dataset_and_split_audit
-  status: not_started
   authorized: true
   next_phase_authorized: false
 
@@ -36,6 +35,7 @@ phase_permissions:
     - UIE3/splits/lsui19/train.tsv
     - UIE3/splits/lsui19/validation.tsv
     - UIE3/splits/lsui19/test.tsv
+    - UIE3/splits/lsui19/forced_formal_train.tsv
     - UIE3/splits/lsui19/SPLIT_METADATA.json
     - UIE3/DATASET_AUDIT.md
     - UIE3/reports/PHASE_B2A_REPORT.md
@@ -62,6 +62,7 @@ phase_outputs:
     - UIE3/splits/lsui19/train.tsv
     - UIE3/splits/lsui19/validation.tsv
     - UIE3/splits/lsui19/test.tsv
+    - UIE3/splits/lsui19/forced_formal_train.tsv
     - UIE3/splits/lsui19/SPLIT_METADATA.json
     - UIE3/DATASET_AUDIT.md
     - UIE3/reports/PHASE_B2A_REPORT.md
@@ -81,6 +82,8 @@ research:
   target_venue: ICASSP_2027
   primary_hardware: RTX_3060_12GB
   primary_metric_for_oracle: RGB_PSNR
+
+
 
 nafnet_small:
   status: planned_not_implemented

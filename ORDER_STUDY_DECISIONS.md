@@ -323,3 +323,61 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0014
+
+- Date: 2026-07-19
+- Status: Accepted
+- Decision: Adopt a duplicate-aware LSUI split while retaining all original
+  paired samples.
+- Original dataset:
+  - root: /root/autodl-tmp/pro/publicdata/LSUI
+  - paired samples: 4279
+- Physical split:
+  - Train development pool: 3851
+  - held-out final test: 428
+- Duplicate policy:
+  - no original sample is deleted;
+  - every sample belonging to a repeated decoded-RGB input group or repeated
+    decoded-RGB GT group is assigned to the development pool;
+  - all such duplicated samples must remain in the formal training subset;
+  - validation is selected only from globally non-duplicated development
+    samples.
+- Formal experiment split:
+  - train: 3466
+  - validation: 385
+  - test: 428
+- Split seed: 3407
+- Test-set use:
+  - the 428-sample test set must not be used for checkpoint selection,
+    hyperparameter selection, router training, or model selection.
+- Scientific semantics changed:
+  The split protocol is strengthened to prevent duplicate-content leakage.
+- Invalidated experiments:
+  Any experiment based on the earlier LSUI19 random split.
+- Human approver: Repository owner
+
+
+---
+
+## Decision D-0015
+
+- Date: 2026-07-20
+- Status: Accepted
+- Decision: Authorize the Phase B2a forced-formal-train manifest.
+- Authorized artifact:
+  - UIE3/splits/lsui19/forced_formal_train.tsv
+- Purpose:
+  - record every development-pool sample belonging to a duplicate input
+    or duplicate GT content group;
+  - verify that all such samples are assigned exclusively to the formal
+    training subset;
+  - support reproducible leakage checks.
+- Scientific semantics changed: No.
+- Protocol version change required: No.
+- Invalidated experiments: None.
+- Current phase remains: B2a.
+- Next phase authorized: No.
+- Human approver: Repository owner
