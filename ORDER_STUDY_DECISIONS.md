@@ -425,3 +425,36 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0017
+
+- Date: 2026-07-21
+- Status: Accepted
+- Decision: Accept Phase B2b static implementation of the NAFNet-small
+  baseline training infrastructure.
+- Phase B2b status: IMPLEMENTED_NOT_RUNTIME_VALIDATED
+- Authorized next phase:
+  Phase B2c — cloud runtime validation and real-data smoke testing.
+- Phase B2c scope:
+  - run all unit and integration tests in the cloud environment;
+  - load real LSUI samples from the formal manifests;
+  - execute forward, backward, and optimizer steps;
+  - verify AMP behavior on CUDA;
+  - run a short 1–4 sample overfit smoke test;
+  - verify checkpoint save, load, and resume;
+  - generate per-image validation PSNR and SSIM on a temporary validation
+    subset;
+  - verify that test-split evaluation is rejected.
+- Explicitly not authorized:
+  - formal baseline training;
+  - final test-set evaluation;
+  - color correction operator;
+  - scattering removal operator;
+  - order comparison;
+  - Oracle analysis;
+  - adaptive routing.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Human approver: Repository owner

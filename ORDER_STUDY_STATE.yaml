@@ -19,8 +19,8 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B2b
-  name: baseline_training_infrastructure_static_implementation
+  id: B2c
+  name: baseline_runtime_and_real_data_smoke_validation
   status: not_started
   authorized: true
   next_phase_authorized: false
@@ -29,28 +29,19 @@ phase_permissions:
   readable_paths:
     - NAFNet/**
     - UIE3/**
+    - /root/autodl-tmp/pro/publicdata/LSUI19_dup_train/**
 
   writable_paths:
-    - UIE3/src/data/**
-    - UIE3/src/losses/**
-    - UIE3/src/metrics/**
-    - UIE3/src/engine/**
-    - UIE3/src/utils/**
-    - UIE3/tools/train_baseline.py
-    - UIE3/tools/evaluate_baseline.py
-    - UIE3/configs/nafnet_small_lsui.yaml
-    - UIE3/requirements/baseline.txt
-    - UIE3/tests/test_manifest_dataset.py
-    - UIE3/tests/test_loss_metrics.py
-    - UIE3/tests/test_checkpoint.py
-    - UIE3/tests/test_train_step.py
-    - UIE3/reports/PHASE_B2B_REPORT.md
+    - UIE3/reports/runtime/phase_b2c/**
+    - UIE3/reports/PHASE_B2C_REPORT.md
+    - /tmp/UIE3_phase_b2c/**
 
   forbidden_actions:
     - modify_upstream_nafnet
     - modify_vendored_nafnet
     - modify_dataset_images
     - modify_formal_split_manifests
+    - modify_baseline_source_code
     - launch_formal_training
     - evaluate_final_test_set
     - implement_color_operator
@@ -62,27 +53,15 @@ phase_permissions:
 
 phase_outputs:
   required:
-    - UIE3/src/data/__init__.py
-    - UIE3/src/data/paired_image_dataset.py
-    - UIE3/src/losses/__init__.py
-    - UIE3/src/losses/charbonnier.py
-    - UIE3/src/metrics/__init__.py
-    - UIE3/src/metrics/image_metrics.py
-    - UIE3/src/engine/__init__.py
-    - UIE3/src/engine/checkpoint.py
-    - UIE3/src/engine/trainer.py
-    - UIE3/src/utils/__init__.py
-    - UIE3/src/utils/seed.py
-    - UIE3/tools/train_baseline.py
-    - UIE3/tools/evaluate_baseline.py
-    - UIE3/configs/nafnet_small_lsui.yaml
-    - UIE3/requirements/baseline.txt
-    - UIE3/tests/test_manifest_dataset.py
-    - UIE3/tests/test_loss_metrics.py
-    - UIE3/tests/test_checkpoint.py
-    - UIE3/tests/test_train_step.py
-    - UIE3/reports/PHASE_B2B_REPORT.md
-
+    - UIE3/reports/runtime/phase_b2c/environment.txt
+    - UIE3/reports/runtime/phase_b2c/pytest.log
+    - UIE3/reports/runtime/phase_b2c/pytest_exit_code.txt
+    - UIE3/reports/runtime/phase_b2c/train_initial.log
+    - UIE3/reports/runtime/phase_b2c/train_resume.log
+    - UIE3/reports/runtime/phase_b2c/validation.log
+    - UIE3/reports/runtime/phase_b2c/validation_metrics.csv
+    - UIE3/reports/runtime/phase_b2c/test_split_guard.log
+    - UIE3/reports/PHASE_B2C_REPORT.md
   optional: []
 
 phase_acceptance:
