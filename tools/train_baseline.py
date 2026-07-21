@@ -8,6 +8,7 @@ import copy
 import json
 import subprocess
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Mapping, Optional, Sequence
 
@@ -22,6 +23,17 @@ FIXED_MODEL_CONFIG = {
 }
 FORMAL_TRAIN_MANIFEST = "splits/lsui19/train.tsv"
 FORMAL_VALIDATION_MANIFEST = "splits/lsui19/validation.tsv"
+FORMAL_TEST_MANIFEST = "splits/lsui19/test.tsv"
+
+
+@dataclass(frozen=True)
+class ManifestSelection:
+    """Resolved manifests and provenance for one guarded CLI invocation."""
+
+    run_mode: str
+    formal_experiment: bool
+    train_manifest: Path
+    validation_manifest: Path
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -40,6 +52,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--max-steps", type=int, default=None)
     parser.add_argument("--num-workers", type=int, default=None)
+    parser.add_argument(
+        "--smoke-test",
+        action="store_true",
+        help="Enable an explicitly non-formal, finite-step real-data smoke run.",
+    )
+    parser.add_argument("--train-manifest-override", type=Path, default=None)
+    parser.add_argument("--validation-manifest-override", type=Path, default=None)
     return parser
 
 
@@ -50,17 +69,9 @@ def _require_mapping(config: Mapping[str, Any], name: str) -> Mapping[str, Any]:
     return value
 
 
-def load_and_validate_config(path: Path) -> Dict[str, Any]:
-    try:
-        import yaml
-    except ImportError as exc:
-        raise RuntimeError("PyYAML is required to read --config.") from exc
+def validate_baseline_config(config: Any) -> Dict[str, Any]:
+    """Validate immutable formal experiment semantics without mutating config."""
 
-    config_path = path.expanduser().resolve(strict=False)
-    if not config_path.exists() or not config_path.is_file():
-        raise FileNotFoundError(f"Config file does not exist: {config_path}")
-    with config_path.open("r", encoding="utf-8") as handle:
-        config = yaml.safe_load(handle)
     if not isinstance(config, dict):
         raise ValueError("YAML config root must be a mapping.")
     experiment = _require_mapping(config, "experiment")
@@ -109,6 +120,20 @@ def load_and_validate_config(path: Path) -> Dict[str, Any]:
     return config
 
 
+def load_and_validate_config(path: Path) -> Dict[str, Any]:
+    try:
+        import yaml
+    except ImportError as exc:
+        raise RuntimeError("PyYAML is required to read --config.") from exc
+
+    config_path = path.expanduser().resolve(strict=False)
+    if not config_path.exists() or not config_path.is_file():
+        raise FileNotFoundError(f"Config file does not exist: {config_path}")
+    with config_path.open("r", encoding="utf-8") as handle:
+        config = yaml.safe_load(handle)
+    return validate_baseline_config(config)
+
+
 def resolve_formal_manifest(relative_path: str) -> Path:
     path = Path(relative_path)
     if path.is_absolute():
@@ -121,6 +146,105 @@ def resolve_formal_manifest(relative_path: str) -> Path:
     if not resolved.exists() or not resolved.is_file():
         raise FileNotFoundError(f"Formal manifest is missing: {resolved}")
     return resolved
+
+
+def validate_training_run_mode(args: argparse.Namespace) -> None:
+    """Reject ambiguous smoke/formal argument combinations before runtime imports."""
+
+    if args.max_steps is not None and (
+        type(args.max_steps) is not int or args.max_steps <= 0
+    ):
+        raise ValueError("--max-steps must be a positive integer when provided.")
+    overrides = (
+        args.train_manifest_override,
+        args.validation_manifest_override,
+    )
+    if not args.smoke_test:
+        if any(path is not None for path in overrides):
+            raise ValueError(
+                "Manifest overrides require explicit --smoke-test; formal mode always "
+                "uses the canonical train and validation manifests."
+            )
+        return
+    if args.max_steps is None:
+        raise ValueError("--smoke-test requires a positive --max-steps value.")
+    if args.train_manifest_override is None:
+        raise ValueError("--smoke-test requires --train-manifest-override.")
+    if args.validation_manifest_override is None:
+        raise ValueError("--smoke-test requires --validation-manifest-override.")
+
+
+def resolve_smoke_manifest_override(path: Path, option_name: str) -> Path:
+    """Resolve an existing smoke manifest while rejecting every test.tsv target."""
+
+    resolved = path.expanduser().resolve(strict=False)
+    canonical_test = (PROJECT_ROOT / FORMAL_TEST_MANIFEST).resolve(strict=False)
+    same_as_canonical_test = (
+        resolved.exists()
+        and canonical_test.exists()
+        and resolved.samefile(canonical_test)
+    )
+    if (
+        resolved == canonical_test
+        or resolved.name.casefold() == "test.tsv"
+        or same_as_canonical_test
+    ):
+        raise ValueError(
+            f"{option_name} must not reference test.tsv; final test data are unauthorized."
+        )
+    if not resolved.exists() or not resolved.is_file():
+        raise FileNotFoundError(f"{option_name} does not exist or is not a file: {resolved}")
+    return resolved
+
+
+def resolve_training_manifest_selection(
+    args: argparse.Namespace,
+) -> ManifestSelection:
+    """Select canonical formal manifests or explicit guarded smoke overrides."""
+
+    validate_training_run_mode(args)
+    if args.smoke_test:
+        return ManifestSelection(
+            run_mode="SMOKE_TEST",
+            formal_experiment=False,
+            train_manifest=resolve_smoke_manifest_override(
+                args.train_manifest_override, "--train-manifest-override"
+            ),
+            validation_manifest=resolve_smoke_manifest_override(
+                args.validation_manifest_override,
+                "--validation-manifest-override",
+            ),
+        )
+    return ManifestSelection(
+        run_mode="FORMAL",
+        formal_experiment=True,
+        train_manifest=resolve_formal_manifest(FORMAL_TRAIN_MANIFEST),
+        validation_manifest=resolve_formal_manifest(FORMAL_VALIDATION_MANIFEST),
+    )
+
+
+def build_checkpoint_config(
+    config: Mapping[str, Any],
+    manifest_selection: ManifestSelection,
+    *,
+    worker_count: int,
+) -> Dict[str, Any]:
+    """Copy config and add non-formal manifest provenance only for smoke runs."""
+
+    checkpoint_config = copy.deepcopy(dict(config))
+    checkpoint_config["data"]["num_workers"] = worker_count
+    if not manifest_selection.formal_experiment:
+        checkpoint_config.update(
+            {
+                "run_mode": "smoke_test",
+                "formal_experiment": False,
+                "actual_train_manifest": str(manifest_selection.train_manifest),
+                "actual_validation_manifest": str(
+                    manifest_selection.validation_manifest
+                ),
+            }
+        )
+    return checkpoint_config
 
 
 def current_git_commit() -> str:
@@ -149,11 +273,11 @@ def _append_json_line(path: Path, record: Mapping[str, Any]) -> None:
 
 
 def run(args: argparse.Namespace) -> int:
-    if args.max_steps is not None and args.max_steps <= 0:
-        raise ValueError("--max-steps must be positive when provided.")
+    validate_training_run_mode(args)
     if args.num_workers is not None and args.num_workers < 0:
         raise ValueError("--num-workers must be non-negative.")
     config = load_and_validate_config(args.config)
+    manifest_selection = resolve_training_manifest_selection(args)
     dataset_root = args.dataset_root.expanduser().resolve(strict=False)
     if not dataset_root.exists() or not dataset_root.is_dir():
         raise FileNotFoundError(f"--dataset-root is not a directory: {dataset_root}")
@@ -165,6 +289,15 @@ def run(args: argparse.Namespace) -> int:
         )
     if resume_path is not None and (not resume_path.exists() or not resume_path.is_file()):
         raise FileNotFoundError(f"Resume checkpoint does not exist: {resume_path}")
+
+    print(f"RUN_MODE={manifest_selection.run_mode}")
+    print(f"FORMAL_EXPERIMENT={str(manifest_selection.formal_experiment).lower()}")
+    if not manifest_selection.formal_experiment:
+        print(f"train_manifest_override={manifest_selection.train_manifest}")
+        print(
+            "validation_manifest_override="
+            f"{manifest_selection.validation_manifest}"
+        )
 
     sys.path.insert(0, str(PROJECT_ROOT))
     try:
@@ -181,13 +314,16 @@ def run(args: argparse.Namespace) -> int:
     from src.models.backbones.nafnet_small import build_nafnet_small
     from src.utils.seed import seed_worker, set_global_seed
 
-    checkpoint_config = copy.deepcopy(config)
     worker_count = (
         args.num_workers
         if args.num_workers is not None
-        else int(checkpoint_config["data"]["num_workers"])
+        else int(config["data"]["num_workers"])
     )
-    checkpoint_config["data"]["num_workers"] = worker_count
+    checkpoint_config = build_checkpoint_config(
+        config,
+        manifest_selection,
+        worker_count=worker_count,
+    )
     device = resolve_device(args.device, torch)
     actual_config = copy.deepcopy(checkpoint_config)
     actual_config["runtime"] = {
@@ -195,6 +331,12 @@ def run(args: argparse.Namespace) -> int:
         "device": str(device),
         "output_dir": str(output_dir),
         "max_steps": args.max_steps,
+        "run_mode": manifest_selection.run_mode.lower(),
+        "formal_experiment": manifest_selection.formal_experiment,
+        "actual_train_manifest": str(manifest_selection.train_manifest),
+        "actual_validation_manifest": str(
+            manifest_selection.validation_manifest
+        ),
     }
     seed = int(checkpoint_config["experiment"]["seed"])
     set_global_seed(
@@ -202,10 +344,8 @@ def run(args: argparse.Namespace) -> int:
         deterministic=bool(checkpoint_config["experiment"].get("deterministic", False)),
     )
 
-    train_manifest = resolve_formal_manifest(checkpoint_config["data"]["train_manifest"])
-    validation_manifest = resolve_formal_manifest(
-        checkpoint_config["data"]["validation_manifest"]
-    )
+    train_manifest = manifest_selection.train_manifest
+    validation_manifest = manifest_selection.validation_manifest
     data_config = checkpoint_config["data"]
     train_dataset = PairedImageDataset(
         str(dataset_root),
