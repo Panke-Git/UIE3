@@ -19,8 +19,8 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B2c
-  name: baseline_runtime_and_real_data_smoke_validation
+  id: B2b-r1
+  name: baseline_smoke_manifest_override_remediation
   status: not_started
   authorized: true
   next_phase_authorized: false
@@ -29,39 +29,32 @@ phase_permissions:
   readable_paths:
     - NAFNet/**
     - UIE3/**
-    - /root/autodl-tmp/pro/publicdata/LSUI19_dup_train/**
 
   writable_paths:
-    - UIE3/reports/runtime/phase_b2c/**
-    - UIE3/reports/PHASE_B2C_REPORT.md
-    - /tmp/UIE3_phase_b2c/**
+    - UIE3/tools/train_baseline.py
+    - UIE3/tools/evaluate_baseline.py
+    - UIE3/tests/test_train_step.py
+    - UIE3/reports/PHASE_B2B_R1_REPORT.md
 
   forbidden_actions:
     - modify_upstream_nafnet
     - modify_vendored_nafnet
     - modify_dataset_images
     - modify_formal_split_manifests
-    - modify_baseline_source_code
     - launch_formal_training
     - evaluate_final_test_set
     - implement_color_operator
     - implement_scattering_operator
     - implement_order_model
-    - implement_oracle_analysis
     - implement_router
     - auto_advance_phase
 
 phase_outputs:
   required:
-    - UIE3/reports/runtime/phase_b2c/environment.txt
-    - UIE3/reports/runtime/phase_b2c/pytest.log
-    - UIE3/reports/runtime/phase_b2c/pytest_exit_code.txt
-    - UIE3/reports/runtime/phase_b2c/train_initial.log
-    - UIE3/reports/runtime/phase_b2c/train_resume.log
-    - UIE3/reports/runtime/phase_b2c/validation.log
-    - UIE3/reports/runtime/phase_b2c/validation_metrics.csv
-    - UIE3/reports/runtime/phase_b2c/test_split_guard.log
-    - UIE3/reports/PHASE_B2C_REPORT.md
+    - UIE3/tools/train_baseline.py
+    - UIE3/tools/evaluate_baseline.py
+    - UIE3/tests/test_train_step.py
+    - UIE3/reports/PHASE_B2B_R1_REPORT.md
   optional: []
 
 phase_acceptance:

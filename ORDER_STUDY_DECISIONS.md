@@ -458,3 +458,31 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated experiments: None.
 - Human approver: Repository owner
+
+
+---
+
+## Decision D-0018
+
+- Date: 2026-07-21
+- Status: Accepted
+- Decision: Remediate the baseline CLI manifest guard discovered during
+  Phase B2c runtime validation.
+- Observed failure:
+  - Phase B2c requires a 1–4 sample real-data smoke test;
+  - the baseline CLI currently requires the exact canonical manifest path
+    `splits/lsui19/train.tsv`;
+  - therefore a temporary smoke-test manifest cannot be supplied.
+- Remediation:
+  - retain canonical-manifest enforcement for normal training;
+  - add an explicit smoke-test mode;
+  - allow temporary train and validation manifest overrides only when
+    smoke-test mode is explicitly enabled;
+  - require a finite positive `--max-steps` in smoke-test mode;
+  - continue to reject test-split evaluation;
+  - log that the run is not a formal experiment.
+- Formal manifests must not be modified.
+- Formal experiment semantics changed: No.
+- Invalidated experiments: None.
+- Current runtime validation remains incomplete.
+- Human approver: Repository owner
