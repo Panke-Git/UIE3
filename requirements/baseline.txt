@@ -1,0 +1,6 @@
+# PyTorch is intentionally omitted. Install a PyTorch build separately that
+# matches the CUDA/runtime environment of the cloud machine.
+numpy
+Pillow
+PyYAML
+pytest

@@ -1,0 +1,46 @@
+# Phase B2b baseline smoke-test starting values; these are not optimized hyperparameters.
+experiment:
+  name: nafnet_small_lsui_baseline
+  seed: 3407
+  deterministic: false
+
+data:
+  train_manifest: splits/lsui19/train.tsv
+  validation_manifest: splits/lsui19/validation.tsv
+  patch_size: 256
+  batch_size: 4
+  num_workers: 4
+  hflip: true
+  vflip: true
+  rot90: true
+  pad_if_smaller: true
+
+model:
+  img_channel: 3
+  width: 32
+  enc_blk_nums: [2, 2, 2]
+  middle_blk_num: 4
+  dec_blk_nums: [2, 2, 2]
+
+loss:
+  name: charbonnier
+  epsilon: 1.0e-3
+
+optimizer:
+  name: AdamW
+  learning_rate: 2.0e-4
+  weight_decay: 0.0
+  betas: [0.9, 0.999]
+
+training:
+  epochs: 200
+  amp: true
+  gradient_clip_norm: null
+  validate_every: 1
+  save_every: 1
+
+metrics:
+  data_range: 1.0
+  crop_border: 0
+  ssim_window_size: 11
+  ssim_sigma: 1.5
