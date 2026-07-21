@@ -381,3 +381,47 @@ Do not delete earlier entries. Append new entries chronologically.
 - Current phase remains: B2a.
 - Next phase authorized: No.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0016
+
+- Date: 2026-07-21
+- Status: Accepted
+- Decision: Accept Phase B2a duplicate-aware LSUI dataset audit and formal
+  split generation.
+- Phase B2a status: PASS
+- Accepted dataset protocol:
+  - physical development pool: 3851 pairs;
+  - physical held-out test set: 428 pairs;
+  - formal train set: 3466 pairs;
+  - formal validation set: 385 pairs;
+  - formal test set: 428 pairs;
+  - forced formal train samples: 112;
+  - total manifest coverage: 4279 unique samples;
+  - cross-split decoded-RGB input overlap: 0;
+  - cross-split decoded-RGB GT overlap: 0.
+- Authorized next phase:
+  Phase B2b — static implementation of the NAFNet-small baseline data,
+  training, checkpoint and evaluation infrastructure.
+- Phase B2b may implement:
+  - manifest-based paired image dataset;
+  - paired crop and augmentation;
+  - NAFNet-small baseline construction;
+  - reconstruction loss;
+  - RGB PSNR and SSIM;
+  - baseline training entry point;
+  - baseline evaluation entry point;
+  - checkpoint save/load/resume;
+  - static and runtime test definitions.
+- Phase B2b must not:
+  - run formal training;
+  - use the final test set for model selection;
+  - implement color correction;
+  - implement scattering removal;
+  - implement order comparison;
+  - implement Oracle analysis;
+  - implement routing.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Human approver: Repository owner
