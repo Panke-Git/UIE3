@@ -1,0 +1,62 @@
+# Phase B3a formal baseline candidate; not yet runtime/resource validated.
+# Phase B3a must not launch the full 200-epoch training run. This candidate is
+# only for cloud resource probing. Final training cost and feasibility must be
+# confirmed from the measured Phase B3a memory, throughput, validation-runtime,
+# checkpoint-size, and total-cost evidence before any later formal run.
+#
+# Fixed semantics implemented by the existing baseline code:
+# - input and target tensors are RGB float32 in [0,1];
+# - only formal train/validation manifests are loaded in formal mode;
+# - the final test manifest is absent and must not participate in checkpoint,
+#   hyperparameter, or model selection;
+# - best checkpoint selection uses the highest formal-validation RGB PSNR;
+# - no pretrained weights, auxiliary loss, EMA, GAN, diffusion model, or
+#   external prior is configured or used;
+# - the B3b formal seed set is [3407, 1234, 2027]; seed 3407 below is the
+#   single-run template and must be replaced explicitly for later seed runs.
+
+experiment:
+  name: nafnet_small_lsui_formal_candidate
+  seed: 3407
+  deterministic: false
+
+data:
+  train_manifest: splits/lsui19/train.tsv
+  validation_manifest: splits/lsui19/validation.tsv
+  patch_size: 256
+  batch_size: 4
+  num_workers: 4
+  hflip: true
+  vflip: true
+  rot90: true
+  pad_if_smaller: true
+
+model:
+  img_channel: 3
+  width: 32
+  enc_blk_nums: [2, 2, 2]
+  middle_blk_num: 4
+  dec_blk_nums: [2, 2, 2]
+
+loss:
+  name: charbonnier
+  epsilon: 1.0e-3
+
+optimizer:
+  name: AdamW
+  learning_rate: 2.0e-4
+  weight_decay: 0.0
+  betas: [0.9, 0.999]
+
+training:
+  epochs: 200  # Candidate only; prohibited from full execution in Phase B3a.
+  amp: true
+  gradient_clip_norm: null
+  validate_every: 1
+  save_every: 1
+
+metrics:
+  data_range: 1.0
+  crop_border: 0
+  ssim_window_size: 11
+  ssim_sigma: 1.5
