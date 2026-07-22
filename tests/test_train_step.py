@@ -53,6 +53,55 @@ def _trainer() -> BaselineTrainer:
     )
 
 
+def _tiny_trainer(
+    *,
+    device: str,
+    amp: bool,
+    gradient_clip_norm: Optional[float] = None,
+) -> BaselineTrainer:
+    torch.manual_seed(3407)
+    model = torch.nn.Conv2d(3, 3, kernel_size=1, bias=False)
+    optimizer = torch.optim.AdamW(
+        model.parameters(), lr=1.0e-2, weight_decay=0.0
+    )
+    return BaselineTrainer(
+        model=model,
+        optimizer=optimizer,
+        loss_function=torch.nn.MSELoss(),
+        device=device,
+        amp=amp,
+        gradient_clip_norm=gradient_clip_norm,
+        config={"test": True},
+        random_seed=3407,
+        git_commit="test-commit",
+    )
+
+
+def _tiny_batch():
+    return {
+        "input": torch.full((1, 3, 4, 4), 0.125, dtype=torch.float32),
+        "target": torch.zeros((1, 3, 4, 4), dtype=torch.float32),
+    }
+
+
+def _parameter_snapshot(trainer: BaselineTrainer):
+    return [parameter.detach().clone() for parameter in trainer.model.parameters()]
+
+
+def _parameters_changed(before, trainer: BaselineTrainer) -> bool:
+    return any(
+        not torch.equal(old, new.detach())
+        for old, new in zip(before, trainer.model.parameters())
+    )
+
+
+def _register_inf_gradient_hook(trainer: BaselineTrainer):
+    parameter = next(trainer.model.parameters())
+    return parameter.register_hook(
+        lambda gradient: torch.full_like(gradient, float("inf"))
+    )
+
+
 def _training_args(
     *,
     smoke_test: bool = False,
@@ -129,6 +178,9 @@ def test_single_train_step_updates_parameters_and_disables_cpu_amp() -> None:
     assert not trainer.amp_enabled
     assert torch.isfinite(torch.tensor(result["loss"]))
     assert trainer.global_step == 1
+    assert result["optimizer_step_applied"] is True
+    assert result["amp_overflow_detected"] is False
+    assert result["amp_scale_after"] >= result["amp_scale_before"]
     assert any(
         not torch.equal(old, new.detach())
         for old, new in zip(before, trainer.model.parameters())
@@ -136,6 +188,133 @@ def test_single_train_step_updates_parameters_and_disables_cpu_amp() -> None:
     for parameter in trainer.model.parameters():
         if parameter.grad is not None:
             assert torch.isfinite(parameter.grad).all()
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA AMP is required")
+def test_finite_amp_step_updates_parameters_and_global_step() -> None:
+    trainer = _tiny_trainer(device="cuda", amp=True)
+    before = _parameter_snapshot(trainer)
+
+    result = trainer.train_step(_tiny_batch())
+
+    assert trainer.amp_enabled
+    assert _parameters_changed(before, trainer)
+    assert trainer.global_step == 1
+    assert result["global_step"] == 1
+    assert result["optimizer_step_applied"] is True
+    assert result["amp_overflow_detected"] is False
+    assert result["amp_scale_after"] >= result["amp_scale_before"]
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA AMP is required")
+def test_amp_overflow_skips_optimizer_update_and_global_step(capsys) -> None:
+    trainer = _tiny_trainer(device="cuda", amp=True)
+    before = _parameter_snapshot(trainer)
+    hook = _register_inf_gradient_hook(trainer)
+    try:
+        result = trainer.train_step(_tiny_batch())
+    finally:
+        hook.remove()
+
+    assert not _parameters_changed(before, trainer)
+    assert trainer.global_step == 0
+    assert result["global_step"] == 0
+    assert result["optimizer_step_applied"] is False
+    assert result["amp_overflow_detected"] is True
+    assert result["amp_scale_after"] < result["amp_scale_before"]
+    overflow_log = capsys.readouterr().out
+    assert "AMP_OVERFLOW_DETECTED" in overflow_log
+    assert "optimizer_step_applied=false" in overflow_log
+    assert "global_step=0" in overflow_log
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA AMP is required")
+def test_finite_amp_step_continues_after_overflow() -> None:
+    trainer = _tiny_trainer(device="cuda", amp=True)
+    hook = _register_inf_gradient_hook(trainer)
+    try:
+        overflow_result = trainer.train_step(_tiny_batch())
+    finally:
+        hook.remove()
+    assert overflow_result["optimizer_step_applied"] is False
+    assert trainer.global_step == 0
+
+    before_finite_step = _parameter_snapshot(trainer)
+    finite_result = trainer.train_step(_tiny_batch())
+
+    assert _parameters_changed(before_finite_step, trainer)
+    assert trainer.global_step == 1
+    assert finite_result["global_step"] == 1
+    assert finite_result["optimizer_step_applied"] is True
+    assert finite_result["amp_overflow_detected"] is False
+    assert finite_result["amp_scale_after"] >= finite_result["amp_scale_before"]
+
+
+def test_non_amp_nonfinite_gradient_remains_fatal() -> None:
+    trainer = _tiny_trainer(device="cpu", amp=False)
+    before = _parameter_snapshot(trainer)
+    hook = _register_inf_gradient_hook(trainer)
+    try:
+        with pytest.raises(FloatingPointError, match="contains NaN or Inf"):
+            trainer.train_step(_tiny_batch())
+    finally:
+        hook.remove()
+
+    assert not _parameters_changed(before, trainer)
+    assert trainer.global_step == 0
+
+
+def test_finite_gradient_clipping_still_updates_once() -> None:
+    clip_norm = 1.0e-3
+    trainer = _tiny_trainer(
+        device="cpu", amp=False, gradient_clip_norm=clip_norm
+    )
+    before = _parameter_snapshot(trainer)
+
+    result = trainer.train_step(_tiny_batch())
+
+    gradients = [
+        parameter.grad.detach().norm(2)
+        for parameter in trainer.model.parameters()
+        if parameter.grad is not None
+    ]
+    total_gradient_norm = torch.linalg.vector_norm(torch.stack(gradients), ord=2)
+    assert total_gradient_norm <= clip_norm + 1.0e-6
+    assert _parameters_changed(before, trainer)
+    assert trainer.global_step == 1
+    assert result["optimizer_step_applied"] is True
+    assert result["amp_overflow_detected"] is False
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA AMP is required")
+def test_amp_scaler_and_successful_global_step_resume_strictly(
+    tmp_path: Path,
+) -> None:
+    first = _tiny_trainer(device="cuda", amp=True)
+    first.train_step(_tiny_batch())
+    hook = _register_inf_gradient_hook(first)
+    try:
+        skipped_result = first.train_step(_tiny_batch())
+    finally:
+        hook.remove()
+    assert skipped_result["optimizer_step_applied"] is False
+    assert first.global_step == 1
+    scaler_state_before_save = first.scaler.state_dict()
+
+    checkpoint = tmp_path / "amp-resume.pt"
+    first.save(checkpoint, epoch=0)
+    resumed = _tiny_trainer(device="cuda", amp=True)
+    state = resumed.resume(checkpoint)
+
+    assert state.scaler_restored
+    assert state.global_step == 1
+    assert resumed.global_step == 1
+    assert resumed.scaler.state_dict() == scaler_state_before_save
+
+    result = resumed.train_step(_tiny_batch())
+    assert result["optimizer_step_applied"] is True
+    assert result["amp_overflow_detected"] is False
+    assert resumed.global_step == 2
 
 
 def test_validation_returns_every_per_image_psnr_and_ssim() -> None:

@@ -42,6 +42,13 @@ def _require_finite_gradients(model: torch.nn.Module) -> None:
             raise FloatingPointError(f"Gradient for parameter {name!r} contains NaN or Inf.")
 
 
+def _gradients_are_finite(model: torch.nn.Module) -> bool:
+    return all(
+        parameter.grad is None or bool(torch.isfinite(parameter.grad).all())
+        for parameter in model.parameters()
+    )
+
+
 def _string_batch(value: Any, batch_size: int, field_name: str) -> List[str]:
     if isinstance(value, str):
         values = [value]
@@ -167,20 +174,41 @@ class BaselineTrainer:
             raise FloatingPointError("Training loss must be a finite scalar.")
         self.scaler.scale(loss).backward()
         self.scaler.unscale_(self.optimizer)
-        _require_finite_gradients(self.model)
-        if self.gradient_clip_norm is not None:
+        gradients_finite = _gradients_are_finite(self.model)
+        if not gradients_finite and not self.amp_enabled:
+            _require_finite_gradients(self.model)
+        if gradients_finite and self.gradient_clip_norm is not None:
             torch.nn.utils.clip_grad_norm_(
                 self.model.parameters(), self.gradient_clip_norm, error_if_nonfinite=True
             )
             _require_finite_gradients(self.model)
+        amp_scale_before = float(self.scaler.get_scale())
         self.scaler.step(self.optimizer)
         self.scaler.update()
-        self.global_step += 1
+        amp_scale_after = float(self.scaler.get_scale())
+        amp_overflow_detected = (
+            self.amp_enabled and amp_scale_after < amp_scale_before
+        )
+        optimizer_step_applied = not amp_overflow_detected
+        if optimizer_step_applied:
+            self.global_step += 1
+        if amp_overflow_detected:
+            print(
+                "AMP_OVERFLOW_DETECTED "
+                "optimizer_step_applied=false "
+                f"global_step={self.global_step} "
+                f"amp_scale_before={amp_scale_before} "
+                f"amp_scale_after={amp_scale_after}"
+            )
         learning_rate = float(self.optimizer.param_groups[0]["lr"])
         return {
             "loss": float(loss.detach().cpu()),
             "learning_rate": learning_rate,
             "global_step": self.global_step,
+            "optimizer_step_applied": optimizer_step_applied,
+            "amp_overflow_detected": amp_overflow_detected,
+            "amp_scale_before": amp_scale_before,
+            "amp_scale_after": amp_scale_after,
         }
 
     def validation_epoch(
