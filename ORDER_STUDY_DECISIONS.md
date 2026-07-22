@@ -486,3 +486,25 @@ Do not delete earlier entries. Append new entries chronologically.
 - Invalidated experiments: None.
 - Current runtime validation remains incomplete.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0019
+
+- Date: 2026-07-22
+- Status: Accepted
+- Decision: Resume Phase B2c for report-only closure after completing the
+  smoke-manifest guard remediation and cloud runtime validation.
+- Current phase:
+  Phase B2c — baseline runtime and real-data smoke validation.
+- Current remaining work:
+  - generate reports/PHASE_B2C_REPORT.md from committed runtime evidence;
+  - perform human acceptance.
+- Writable scope:
+  - UIE3/reports/PHASE_B2C_REPORT.md only.
+- Runtime experiments must not be rerun in this report-only closure step.
+- Source code, tests, configs, manifests and runtime evidence are read-only.
+- Next phase authorized: No.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Human approver: Repository owner
