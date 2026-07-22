@@ -1,0 +1,17 @@
+COMMAND=/root/miniconda3/envs/pax/bin/python tools/evaluate_baseline.py --config configs/nafnet_small_lsui_formal.yaml --dataset-root /root/autodl-tmp/pro/publicdata/LSUI19_dup_train --checkpoint /tmp/UIE3_phase_b3a/resource_probe/last.pt --split validation --device cuda --output-csv reports/runtime/phase_b3a/full_validation_metrics.csv --num-workers 4
+RUN_MODE=FORMAL
+FORMAL_EXPERIMENT=true
+{
+  "actual_validation_manifest": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/splits/lsui19/validation.tsv",
+  "formal_experiment": true,
+  "mean_psnr_rgb": 19.991820521168894,
+  "mean_ssim_rgb": 0.7712961410547232,
+  "num_samples": 385,
+  "output_csv": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/reports/runtime/phase_b3a/full_validation_metrics.csv",
+  "run_mode": "formal",
+  "split": "validation"
+}
+VALIDATION_ELAPSED_SECONDS=20.733182
+VALIDATION_MAX_RSS_KB=1651260
+VALIDATION_EXIT_CODE=0
+validation_process_exit_code=0

@@ -1,0 +1,81 @@
+COMMAND=/root/miniconda3/envs/pax/bin/python tools/train_baseline.py --config configs/nafnet_small_lsui_formal.yaml --dataset-root /root/autodl-tmp/pro/publicdata/LSUI19_dup_train --device cuda --output-dir /tmp/UIE3_phase_b3a/resource_probe --max-steps 100 --num-workers 4
+RUN_MODE=FORMAL
+FORMAL_EXPERIMENT=true
+Git commit: 17b2847e9a1f3a8b841172e16614b9c1e94dad0a
+Device: cuda
+Parameter count: 2846755
+Resolved config:
+{
+  "data": {
+    "batch_size": 4,
+    "hflip": true,
+    "num_workers": 4,
+    "pad_if_smaller": true,
+    "patch_size": 256,
+    "rot90": true,
+    "train_manifest": "splits/lsui19/train.tsv",
+    "validation_manifest": "splits/lsui19/validation.tsv",
+    "vflip": true
+  },
+  "experiment": {
+    "deterministic": false,
+    "name": "nafnet_small_lsui_formal_candidate",
+    "seed": 3407
+  },
+  "loss": {
+    "epsilon": 0.001,
+    "name": "charbonnier"
+  },
+  "metrics": {
+    "crop_border": 0,
+    "data_range": 1.0,
+    "ssim_sigma": 1.5,
+    "ssim_window_size": 11
+  },
+  "model": {
+    "dec_blk_nums": [
+      2,
+      2,
+      2
+    ],
+    "enc_blk_nums": [
+      2,
+      2,
+      2
+    ],
+    "img_channel": 3,
+    "middle_blk_num": 4,
+    "width": 32
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "learning_rate": 0.0002,
+    "name": "AdamW",
+    "weight_decay": 0.0
+  },
+  "runtime": {
+    "actual_train_manifest": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/splits/lsui19/train.tsv",
+    "actual_validation_manifest": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/splits/lsui19/validation.tsv",
+    "dataset_root": "/root/autodl-tmp/pro/publicdata/LSUI19_dup_train",
+    "device": "cuda",
+    "formal_experiment": true,
+    "max_steps": 100,
+    "output_dir": "/tmp/UIE3_phase_b3a/resource_probe",
+    "run_mode": "formal"
+  },
+  "training": {
+    "amp": true,
+    "epochs": 200,
+    "gradient_clip_norm": null,
+    "save_every": 1,
+    "validate_every": 1
+  }
+}
+{"best_validation_psnr": 19.991800446943802, "epoch": 0, "global_step": 100, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.09442494377493858, "validation_psnr": 19.991800446943802, "validation_ssim": 0.771301347249514}
+TIME_ELAPSED_SECONDS=60.162727
+TIME_MAX_RSS_KB=2341568
+TIME_EXIT_CODE=0
+resource_probe_exit_code=0

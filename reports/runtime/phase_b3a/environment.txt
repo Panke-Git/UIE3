@@ -1,0 +1,17 @@
+platform: Linux-5.15.0-139-generic-x86_64-with-glibc2.35
+python: 3.12.13 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:38:16) [GCC 14.3.0]
+python_executable: /root/miniconda3/envs/pax/bin/python
+torch: 2.13.0+cu126
+torch_cuda_runtime: 12.6
+cuda_available: True
+gpu: NVIDIA GeForce RTX 3090
+gpu_count: 1
+cudnn: 91002
+numpy: 2.4.4
+pillow: 12.2.0
+pyyaml: 6.0.3
+git_commit: 17b2847e9a1f3a8b841172e16614b9c1e94dad0a
+config_sha256: 6eadaed31a60127930c302f2fb11a554952fb759bb7c04fdf9110b88cd70755d
+formal_train_rows: 3466
+formal_validation_rows: 385
+dataset_root: /root/autodl-tmp/pro/publicdata/LSUI19_dup_train
