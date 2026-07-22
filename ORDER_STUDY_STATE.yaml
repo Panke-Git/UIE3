@@ -21,7 +21,7 @@ git:
 current_phase:
   id: B3b-1r1c
   name: amp_overflow_cloud_runtime_validation
-  status: not_started
+  status: in_progress
   authorized: true
   next_phase_authorized: false
 
