@@ -604,3 +604,54 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0022
+
+- Date: 2026-07-22
+- Status: Accepted
+- Decision: Accept Phase B3a-r1 formal hardware and training-budget freeze.
+- Phase B3a-r1 status: PASS
+- Frozen formal-training platform:
+  - NVIDIA RTX 3090 24GB or an equivalent GPU with sufficient memory.
+- Frozen model and optimization protocol:
+  - NAFNet-small;
+  - patch_size: 256;
+  - batch_size: 4;
+  - num_workers: 4;
+  - AMP: true;
+  - optimizer: AdamW;
+  - learning rate: 2.0e-4;
+  - weight decay: 0;
+  - maximum training length: 200 epochs;
+  - checkpoint selection: highest formal-validation RGB PSNR.
+- Frozen formal seed set:
+  - 3407;
+  - 1234;
+  - 2027.
+- Operational checkpoint policy:
+  - best.pt and last.pt must be retained;
+  - periodic epoch checkpoints may be retained every 10 epochs;
+  - periodic checkpoint retention does not alter optimization or model
+    selection semantics.
+- Authorized next phase:
+  Phase B3b-1 — formal NAFNet-small baseline training for seed 3407 only.
+- Phase B3b-1 scope:
+  - train seed 3407 for the frozen maximum budget;
+  - use only the formal train manifest for optimization;
+  - use only the formal validation manifest for checkpoint selection;
+  - export per-image validation metrics for the selected best checkpoint;
+  - preserve complete configuration, logs and checkpoint provenance.
+- Explicitly not authorized:
+  - seed 1234 training;
+  - seed 2027 training;
+  - final test evaluation;
+  - color correction operator;
+  - scattering removal operator;
+  - operator-order comparison;
+  - Oracle analysis;
+  - adaptive routing.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Human approver: Repository owner

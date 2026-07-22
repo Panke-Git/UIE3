@@ -19,9 +19,9 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B3a-r1
-  name: formal_hardware_and_training_budget_freeze
-  status: in_progress
+  id: B3b-1
+  name: baseline_formal_training_seed_3407
+  status: not_started
   authorized: true
   next_phase_authorized: false
 
@@ -29,9 +29,13 @@ phase_permissions:
   readable_paths:
     - NAFNet/**
     - UIE3/**
+    - /root/autodl-tmp/pro/publicdata/LSUI19_dup_train/**
 
   writable_paths:
-    - UIE3/reports/PHASE_B3A_R1_REPORT.md
+    - UIE3/configs/nafnet_small_lsui_formal_seed3407.yaml
+    - UIE3/reports/runtime/phase_b3b_seed3407/**
+    - UIE3/reports/PHASE_B3B_SEED3407_REPORT.md
+    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407/**
 
   forbidden_actions:
     - modify_upstream_nafnet
@@ -40,9 +44,9 @@ phase_permissions:
     - modify_formal_split_manifests
     - modify_baseline_source_code
     - modify_tests
-    - modify_configs
-    - rerun_runtime_experiments
-    - launch_formal_training
+    - modify_base_formal_config
+    - train_seed_1234
+    - train_seed_2027
     - evaluate_final_test_set
     - implement_color_operator
     - implement_scattering_operator
@@ -54,15 +58,17 @@ phase_permissions:
 
 phase_outputs:
   required:
-    - UIE3/reports/PHASE_B3A_REPORT.md
-    - UIE3/reports/runtime/phase_b3a/environment.txt
-    - UIE3/reports/runtime/phase_b3a/resource_probe.log
-    - UIE3/reports/runtime/phase_b3a/resource_probe.json
-    - UIE3/reports/runtime/phase_b3a/full_validation.log
-    - UIE3/reports/runtime/phase_b3a/full_validation_metrics.csv
-    - UIE3/reports/PHASE_B3A_R1_REPORT.md
+    - UIE3/configs/nafnet_small_lsui_formal_seed3407.yaml
+    - UIE3/reports/runtime/phase_b3b_seed3407/environment.txt
+    - UIE3/reports/runtime/phase_b3b_seed3407/train.log
+    - UIE3/reports/runtime/phase_b3b_seed3407/train_exit_code.txt
+    - UIE3/reports/runtime/phase_b3b_seed3407/best_validation.log
+    - UIE3/reports/runtime/phase_b3b_seed3407/best_validation_metrics.csv
+    - UIE3/reports/runtime/phase_b3b_seed3407/run_summary.json
+    - UIE3/reports/PHASE_B3B_SEED3407_REPORT.md
 
   optional: []
+
 
 phase_acceptance:
   required_audit_status:
