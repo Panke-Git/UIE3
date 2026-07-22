@@ -1,0 +1,6 @@
+phase=B3b-1
+seed=3407
+status=BLOCKED_BY_NONFINITE_GRADIENT
+last_completed_global_step=3468
+train_exit_code=2
+reported_parameter=intro.bias

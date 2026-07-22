@@ -1,0 +1,88 @@
+nohup: ignoring input
+FORMAL_RUN_START=2026-07-22T22:47:44+08:00
+SEED=3407
+RUN_MODE=FORMAL
+FINAL_TEST_EVALUATED=false
+RUN_MODE=FORMAL
+FORMAL_EXPERIMENT=true
+Git commit: d6652a2b08c323d7fb731d40faa6e6ca56a3f8cc
+Device: cuda
+Parameter count: 2846755
+Resolved config:
+{
+  "data": {
+    "batch_size": 4,
+    "hflip": true,
+    "num_workers": 4,
+    "pad_if_smaller": true,
+    "patch_size": 256,
+    "rot90": true,
+    "train_manifest": "splits/lsui19/train.tsv",
+    "validation_manifest": "splits/lsui19/validation.tsv",
+    "vflip": true
+  },
+  "experiment": {
+    "deterministic": false,
+    "name": "nafnet_small_lsui_formal_seed3407",
+    "seed": 3407
+  },
+  "loss": {
+    "epsilon": 0.001,
+    "name": "charbonnier"
+  },
+  "metrics": {
+    "crop_border": 0,
+    "data_range": 1.0,
+    "ssim_sigma": 1.5,
+    "ssim_window_size": 11
+  },
+  "model": {
+    "dec_blk_nums": [
+      2,
+      2,
+      2
+    ],
+    "enc_blk_nums": [
+      2,
+      2,
+      2
+    ],
+    "img_channel": 3,
+    "middle_blk_num": 4,
+    "width": 32
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "learning_rate": 0.0002,
+    "name": "AdamW",
+    "weight_decay": 0.0
+  },
+  "runtime": {
+    "actual_train_manifest": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/splits/lsui19/train.tsv",
+    "actual_validation_manifest": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/splits/lsui19/validation.tsv",
+    "dataset_root": "/root/autodl-tmp/pro/publicdata/LSUI19_dup_train",
+    "device": "cuda",
+    "formal_experiment": true,
+    "max_steps": null,
+    "output_dir": "/root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407",
+    "run_mode": "formal"
+  },
+  "training": {
+    "amp": true,
+    "epochs": 200,
+    "gradient_clip_norm": null,
+    "save_every": 10,
+    "validate_every": 1
+  }
+}
+{"best_validation_psnr": 21.635606646847414, "epoch": 0, "global_step": 867, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.07802632876866279, "validation_psnr": 21.635606646847414, "validation_ssim": 0.8285075034414019}
+{"best_validation_psnr": 22.508203677387982, "epoch": 1, "global_step": 1734, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.06724566724817371, "validation_psnr": 22.508203677387982, "validation_ssim": 0.8418268855516012}
+{"best_validation_psnr": 22.92577202536843, "epoch": 2, "global_step": 2601, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.06457358877998459, "validation_psnr": 22.92577202536843, "validation_ssim": 0.8488034274670985}
+{"best_validation_psnr": 23.311626689465015, "epoch": 3, "global_step": 3468, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.062128755473451217, "validation_psnr": 23.311626689465015, "validation_ssim": 0.8518725407588017}
+ERROR: FloatingPointError: Gradient for parameter 'intro.bias' contains NaN or Inf.
+FORMAL_RUN_END=2026-07-22T22:57:58+08:00
+TRAIN_ELAPSED_SECONDS=614
+TRAIN_EXIT_CODE=2
