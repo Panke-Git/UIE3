@@ -508,3 +508,42 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0020
+
+- Date: 2026-07-22
+- Status: Accepted
+- Decision: Accept Phase B2c cloud runtime and real-data smoke validation.
+- Phase B2c status: PASS
+- Accepted evidence:
+  - pytest: 30 passed, 0 failed, exit code 0;
+  - 161 warnings were recorded and did not cause test failure;
+  - real LSUI CUDA smoke training completed;
+  - 40 continuous optimizer steps were completed;
+  - checkpoint resume advanced global_step from 20 to 40;
+  - model and optimizer states were restored;
+  - validation exported four per-image RGB PSNR and SSIM records;
+  - all validation metrics were finite;
+  - final test evaluation was rejected with exit code 2;
+  - no forbidden test CSV was generated.
+- Authorized next phase:
+  Phase B3a — formal NAFNet-small baseline configuration freeze and resource
+  validation.
+- Phase B3a scope:
+  - verify the candidate formal configuration on the complete formal train
+    and validation manifests;
+  - measure CUDA memory, training throughput, validation runtime, checkpoint
+    size and estimated total training cost;
+  - freeze the formal baseline configuration and checkpoint-selection rule.
+- Phase B3a must not:
+  - launch full 200-epoch training;
+  - evaluate the final test set;
+  - implement color correction;
+  - implement scattering removal;
+  - implement operator ordering;
+  - implement Oracle analysis or routing.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Human approver: Repository owner
