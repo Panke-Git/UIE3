@@ -19,8 +19,8 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B3a
-  name: baseline_formal_config_freeze_and_resource_validation
+  id: B3a-r1
+  name: formal_hardware_and_training_budget_freeze
   status: in_progress
   authorized: true
   next_phase_authorized: false
@@ -29,13 +29,9 @@ phase_permissions:
   readable_paths:
     - NAFNet/**
     - UIE3/**
-    - /root/autodl-tmp/pro/publicdata/LSUI19_dup_train/**
 
   writable_paths:
-    - UIE3/configs/nafnet_small_lsui_formal.yaml
-    - UIE3/reports/runtime/phase_b3a/**
-    - UIE3/reports/PHASE_B3A_REPORT.md
-    - /tmp/UIE3_phase_b3a/**
+    - UIE3/reports/PHASE_B3A_R1_REPORT.md
 
   forbidden_actions:
     - modify_upstream_nafnet
@@ -44,8 +40,10 @@ phase_permissions:
     - modify_formal_split_manifests
     - modify_baseline_source_code
     - modify_tests
+    - modify_configs
+    - rerun_runtime_experiments
+    - launch_formal_training
     - evaluate_final_test_set
-    - launch_full_multiseed_training
     - implement_color_operator
     - implement_scattering_operator
     - implement_order_model
@@ -56,13 +54,13 @@ phase_permissions:
 
 phase_outputs:
   required:
-    - UIE3/configs/nafnet_small_lsui_formal.yaml
+    - UIE3/reports/PHASE_B3A_REPORT.md
     - UIE3/reports/runtime/phase_b3a/environment.txt
     - UIE3/reports/runtime/phase_b3a/resource_probe.log
     - UIE3/reports/runtime/phase_b3a/resource_probe.json
     - UIE3/reports/runtime/phase_b3a/full_validation.log
     - UIE3/reports/runtime/phase_b3a/full_validation_metrics.csv
-    - UIE3/reports/PHASE_B3A_REPORT.md
+    - UIE3/reports/PHASE_B3A_R1_REPORT.md
 
   optional: []
 

@@ -547,3 +547,60 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0021
+
+- Date: 2026-07-22
+- Status: Accepted
+- Decision: Resolve the Phase B3a configuration revision by freezing the
+  official formal-training hardware and training-budget policy.
+- Phase B3a runtime-chain result:
+  - the formal train manifest loaded successfully;
+  - 100 CUDA optimizer steps completed;
+  - batch_size=4 and patch_size=256 completed without CUDA OOM;
+  - checkpoint saving completed;
+  - the complete 385-sample validation path completed;
+  - all per-image RGB PSNR and SSIM values were finite;
+  - the final test split was not evaluated.
+- Cause of the previous NEEDS_CONFIGURATION_REVISION status:
+  - batch_size=4 used approximately 17148 MiB on an RTX 3090;
+  - this exceeds the previously assumed RTX 3060 12GB portability target;
+  - no runtime or scientific failure was observed on the actual cloud
+    execution platform.
+- Hardware policy:
+  - the official formal experiment platform is an NVIDIA RTX 3090 24GB or
+    an equivalent GPU with sufficient memory;
+  - the local RTX 3060 12GB is a development and lightweight smoke-test
+    platform;
+  - fitting the complete formal training configuration into 12GB is not a
+    formal acceptance requirement.
+- Frozen resource configuration:
+  - patch_size: 256;
+  - batch_size: 4;
+  - num_workers: 4;
+  - AMP: true.
+- Frozen optimization protocol:
+  - optimizer: AdamW;
+  - learning rate: 2.0e-4;
+  - weight decay: 0;
+  - maximum training length: 200 epochs;
+  - checkpoint selection: highest formal-validation RGB PSNR;
+  - the final test split must not participate in checkpoint selection.
+- The 200-epoch value is a fixed maximum training budget and is not claimed
+  to be performance-optimal.
+- Formal seeds remain:
+  - 3407;
+  - 1234;
+  - 2027.
+- Estimated compute:
+  - approximately 20.14 hours per seed on the measured RTX 3090 setup;
+  - approximately 60.43 hours for three seeds, excluding scheduling and
+    additional operational overhead.
+- Current phase:
+  Phase B3a-r1 — report-only hardware and training-budget freeze.
+- Next phase authorized: No.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Human approver: Repository owner
