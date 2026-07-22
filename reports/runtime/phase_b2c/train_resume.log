@@ -1,0 +1,110 @@
+RUN_MODE=SMOKE_TEST
+FORMAL_EXPERIMENT=false
+train_manifest_override=/tmp/UIE3_phase_b2c/train_4.tsv
+validation_manifest_override=/tmp/UIE3_phase_b2c/validation_4.tsv
+Git commit: bd8ee664beb75616dc7ec6f273afadb0a060f6d1
+Device: cuda
+Parameter count: 2846755
+Resolved config:
+{
+  "actual_train_manifest": "/tmp/UIE3_phase_b2c/train_4.tsv",
+  "actual_validation_manifest": "/tmp/UIE3_phase_b2c/validation_4.tsv",
+  "data": {
+    "batch_size": 4,
+    "hflip": true,
+    "num_workers": 0,
+    "pad_if_smaller": true,
+    "patch_size": 256,
+    "rot90": true,
+    "train_manifest": "splits/lsui19/train.tsv",
+    "validation_manifest": "splits/lsui19/validation.tsv",
+    "vflip": true
+  },
+  "experiment": {
+    "deterministic": false,
+    "name": "nafnet_small_lsui_baseline",
+    "seed": 3407
+  },
+  "formal_experiment": false,
+  "loss": {
+    "epsilon": 0.001,
+    "name": "charbonnier"
+  },
+  "metrics": {
+    "crop_border": 0,
+    "data_range": 1.0,
+    "ssim_sigma": 1.5,
+    "ssim_window_size": 11
+  },
+  "model": {
+    "dec_blk_nums": [
+      2,
+      2,
+      2
+    ],
+    "enc_blk_nums": [
+      2,
+      2,
+      2
+    ],
+    "img_channel": 3,
+    "middle_blk_num": 4,
+    "width": 32
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "learning_rate": 0.0002,
+    "name": "AdamW",
+    "weight_decay": 0.0
+  },
+  "run_mode": "smoke_test",
+  "runtime": {
+    "actual_train_manifest": "/tmp/UIE3_phase_b2c/train_4.tsv",
+    "actual_validation_manifest": "/tmp/UIE3_phase_b2c/validation_4.tsv",
+    "dataset_root": "/root/autodl-tmp/pro/publicdata/LSUI19_dup_train",
+    "device": "cuda",
+    "formal_experiment": false,
+    "max_steps": 40,
+    "output_dir": "/tmp/UIE3_phase_b2c/overfit_run",
+    "run_mode": "smoke_test"
+  },
+  "training": {
+    "amp": true,
+    "epochs": 200,
+    "gradient_clip_norm": null,
+    "save_every": 1,
+    "validate_every": 1
+  }
+}
+{"best_validation_psnr": 15.645147562026978, "epoch": 20, "global_step": 21, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.12928546965122223, "validation_psnr": 15.645147562026978, "validation_ssim": 0.6375352293252945}
+{"best_validation_psnr": 15.736911058425903, "epoch": 21, "global_step": 22, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.13705380260944366, "validation_psnr": 15.736911058425903, "validation_ssim": 0.6370527893304825}
+{"best_validation_psnr": 15.84486174583435, "epoch": 22, "global_step": 23, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.15790176391601562, "validation_psnr": 15.84486174583435, "validation_ssim": 0.6387248784303665}
+{"best_validation_psnr": 15.938218355178833, "epoch": 23, "global_step": 24, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.1360613852739334, "validation_psnr": 15.938218355178833, "validation_ssim": 0.6414990872144699}
+{"best_validation_psnr": 16.005817413330078, "epoch": 24, "global_step": 25, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.1277935802936554, "validation_psnr": 16.005817413330078, "validation_ssim": 0.6457618474960327}
+{"best_validation_psnr": 16.067853689193726, "epoch": 25, "global_step": 26, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.15846054255962372, "validation_psnr": 16.067853689193726, "validation_ssim": 0.6506891995668411}
+{"best_validation_psnr": 16.11457133293152, "epoch": 26, "global_step": 27, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.14535820484161377, "validation_psnr": 16.11457133293152, "validation_ssim": 0.657339945435524}
+{"best_validation_psnr": 16.153557300567627, "epoch": 27, "global_step": 28, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.13285672664642334, "validation_psnr": 16.153557300567627, "validation_ssim": 0.6661956012248993}
+{"best_validation_psnr": 16.183862924575806, "epoch": 28, "global_step": 29, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.15509960055351257, "validation_psnr": 16.183862924575806, "validation_ssim": 0.6756915897130966}
+{"best_validation_psnr": 16.188777446746826, "epoch": 29, "global_step": 30, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.1318342238664627, "validation_psnr": 16.188777446746826, "validation_ssim": 0.6850522011518478}
+{"best_validation_psnr": 16.188777446746826, "epoch": 30, "global_step": 31, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.11858745664358139, "validation_psnr": 16.17417049407959, "validation_ssim": 0.6948297172784805}
+{"best_validation_psnr": 16.188777446746826, "epoch": 31, "global_step": 32, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.16092684864997864, "validation_psnr": 16.173839569091797, "validation_ssim": 0.7026069909334183}
+{"best_validation_psnr": 16.19218397140503, "epoch": 32, "global_step": 33, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.13346563279628754, "validation_psnr": 16.19218397140503, "validation_ssim": 0.7078379392623901}
+{"best_validation_psnr": 16.19218397140503, "epoch": 33, "global_step": 34, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.11294132471084595, "validation_psnr": 16.187680959701538, "validation_ssim": 0.712180107831955}
+{"best_validation_psnr": 16.206011056900024, "epoch": 34, "global_step": 35, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.11466813087463379, "validation_psnr": 16.206011056900024, "validation_ssim": 0.7128385752439499}
+{"best_validation_psnr": 16.246442079544067, "epoch": 35, "global_step": 36, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.14243820309638977, "validation_psnr": 16.246442079544067, "validation_ssim": 0.7101280838251114}
+{"best_validation_psnr": 16.261324405670166, "epoch": 36, "global_step": 37, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.11831780523061752, "validation_psnr": 16.261324405670166, "validation_ssim": 0.7019180655479431}
+{"best_validation_psnr": 16.261324405670166, "epoch": 37, "global_step": 38, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.10464788973331451, "validation_psnr": 16.227548599243164, "validation_ssim": 0.6912690699100494}
+{"best_validation_psnr": 16.261324405670166, "epoch": 38, "global_step": 39, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.11743657290935516, "validation_psnr": 16.169389486312866, "validation_ssim": 0.6854860037565231}
+{"best_validation_psnr": 16.261324405670166, "epoch": 39, "global_step": 40, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.1451365202665329, "validation_psnr": 16.11678147315979, "validation_ssim": 0.6814639568328857}
+resume_exit_code=0
+resume_checkpoint: /tmp/UIE3_phase_b2c/overfit_run/last.pt
+old_global_step: 20
+new_global_step: 40
+expected_minimum_step: 40
+epoch: 39
+model_state_present: True
+optimizer_state_present: True
+Checkpoint resume verification: PASS

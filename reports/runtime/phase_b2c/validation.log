@@ -1,0 +1,14 @@
+RUN_MODE=SMOKE_TEST
+FORMAL_EXPERIMENT=false
+validation_manifest_override=/tmp/UIE3_phase_b2c/validation_4.tsv
+{
+  "actual_validation_manifest": "/tmp/UIE3_phase_b2c/validation_4.tsv",
+  "formal_experiment": false,
+  "mean_psnr_rgb": 16.11678147315979,
+  "mean_ssim_rgb": 0.6814638525247574,
+  "num_samples": 4,
+  "output_csv": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/reports/runtime/phase_b2c/validation_metrics.csv",
+  "run_mode": "smoke_test",
+  "split": "validation"
+}
+validation_exit_code=0

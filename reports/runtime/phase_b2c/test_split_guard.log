@@ -1,0 +1,2 @@
+ERROR: ValueError: Phase B2b-r1 does not authorize final test evaluation; --split must be validation even in smoke-test mode.
+test_guard_exit_code=2

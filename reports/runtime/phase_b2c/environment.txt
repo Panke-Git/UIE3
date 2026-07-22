@@ -1,0 +1,14 @@
+platform: Linux-5.15.0-139-generic-x86_64-with-glibc2.35
+python: 3.12.13 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:38:16) [GCC 14.3.0]
+python_executable: /root/miniconda3/envs/pax/bin/python
+torch: 2.13.0+cu126
+torch_cuda_runtime: 12.6
+cuda_available: True
+gpu: NVIDIA GeForce RTX 3090
+numpy: 2.4.4
+pillow: 12.2.0
+pyyaml: 6.0.3
+pytest: 9.1.1
+cudnn: 91002
+git_commit: 4dbbd1acfc2314d5d4ab9bf78686f4ecaf7e6598
+dataset_root: /root/autodl-tmp/pro/publicdata/LSUI19_dup_train

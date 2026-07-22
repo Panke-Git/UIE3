@@ -1,0 +1,5 @@
+sample_id,input_relative_path,gt_relative_path,psnr_rgb,ssim_rgb
+0,Train/input/0.jpg,Train/GT/0.jpg,17.520435333251953,0.5413249731063843
+6,Train/input/6.jpg,Train/GT/6.jpg,17.975341796875,0.7938629984855652
+18,Train/input/18.jpg,Train/GT/18.jpg,14.25607681274414,0.6898318529129028
+19,Train/input/19.jpg,Train/GT/19.jpg,14.715271949768066,0.7008355855941772

@@ -1,0 +1,101 @@
+RUN_MODE=SMOKE_TEST
+FORMAL_EXPERIMENT=false
+train_manifest_override=/tmp/UIE3_phase_b2c/train_4.tsv
+validation_manifest_override=/tmp/UIE3_phase_b2c/validation_4.tsv
+Git commit: bd8ee664beb75616dc7ec6f273afadb0a060f6d1
+Device: cuda
+Parameter count: 2846755
+Resolved config:
+{
+  "actual_train_manifest": "/tmp/UIE3_phase_b2c/train_4.tsv",
+  "actual_validation_manifest": "/tmp/UIE3_phase_b2c/validation_4.tsv",
+  "data": {
+    "batch_size": 4,
+    "hflip": true,
+    "num_workers": 0,
+    "pad_if_smaller": true,
+    "patch_size": 256,
+    "rot90": true,
+    "train_manifest": "splits/lsui19/train.tsv",
+    "validation_manifest": "splits/lsui19/validation.tsv",
+    "vflip": true
+  },
+  "experiment": {
+    "deterministic": false,
+    "name": "nafnet_small_lsui_baseline",
+    "seed": 3407
+  },
+  "formal_experiment": false,
+  "loss": {
+    "epsilon": 0.001,
+    "name": "charbonnier"
+  },
+  "metrics": {
+    "crop_border": 0,
+    "data_range": 1.0,
+    "ssim_sigma": 1.5,
+    "ssim_window_size": 11
+  },
+  "model": {
+    "dec_blk_nums": [
+      2,
+      2,
+      2
+    ],
+    "enc_blk_nums": [
+      2,
+      2,
+      2
+    ],
+    "img_channel": 3,
+    "middle_blk_num": 4,
+    "width": 32
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "learning_rate": 0.0002,
+    "name": "AdamW",
+    "weight_decay": 0.0
+  },
+  "run_mode": "smoke_test",
+  "runtime": {
+    "actual_train_manifest": "/tmp/UIE3_phase_b2c/train_4.tsv",
+    "actual_validation_manifest": "/tmp/UIE3_phase_b2c/validation_4.tsv",
+    "dataset_root": "/root/autodl-tmp/pro/publicdata/LSUI19_dup_train",
+    "device": "cuda",
+    "formal_experiment": false,
+    "max_steps": 20,
+    "output_dir": "/tmp/UIE3_phase_b2c/overfit_run",
+    "run_mode": "smoke_test"
+  },
+  "training": {
+    "amp": true,
+    "epochs": 200,
+    "gradient_clip_norm": null,
+    "save_every": 1,
+    "validate_every": 1
+  }
+}
+{"best_validation_psnr": 13.953492879867554, "epoch": 0, "global_step": 1, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.2562867999076843, "validation_psnr": 13.953492879867554, "validation_ssim": 0.4864022880792618}
+{"best_validation_psnr": 14.372826099395752, "epoch": 1, "global_step": 2, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.23602977395057678, "validation_psnr": 14.372826099395752, "validation_ssim": 0.5078465342521667}
+{"best_validation_psnr": 14.754954814910889, "epoch": 2, "global_step": 3, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.2404506653547287, "validation_psnr": 14.754954814910889, "validation_ssim": 0.5261005312204361}
+{"best_validation_psnr": 15.1195650100708, "epoch": 3, "global_step": 4, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.19354617595672607, "validation_psnr": 15.1195650100708, "validation_ssim": 0.5417269170284271}
+{"best_validation_psnr": 15.40793228149414, "epoch": 4, "global_step": 5, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.1744024008512497, "validation_psnr": 15.40793228149414, "validation_ssim": 0.5529731512069702}
+{"best_validation_psnr": 15.578223943710327, "epoch": 5, "global_step": 6, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.19192342460155487, "validation_psnr": 15.578223943710327, "validation_ssim": 0.5628329217433929}
+{"best_validation_psnr": 15.639548778533936, "epoch": 6, "global_step": 7, "is_best": true, "learning_rate": 0.0002, "train_loss": 0.17607556283473969, "validation_psnr": 15.639548778533936, "validation_ssim": 0.5729875266551971}
+{"best_validation_psnr": 15.639548778533936, "epoch": 7, "global_step": 8, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.16573159396648407, "validation_psnr": 15.628954648971558, "validation_ssim": 0.5838028937578201}
+{"best_validation_psnr": 15.639548778533936, "epoch": 8, "global_step": 9, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.18662211298942566, "validation_psnr": 15.587339401245117, "validation_ssim": 0.5959863215684891}
+{"best_validation_psnr": 15.639548778533936, "epoch": 9, "global_step": 10, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.16338258981704712, "validation_psnr": 15.501083850860596, "validation_ssim": 0.6095282882452011}
+{"best_validation_psnr": 15.639548778533936, "epoch": 10, "global_step": 11, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.15442180633544922, "validation_psnr": 15.392351865768433, "validation_ssim": 0.6244180351495743}
+{"best_validation_psnr": 15.639548778533936, "epoch": 11, "global_step": 12, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.1971096694469452, "validation_psnr": 15.318055391311646, "validation_ssim": 0.6373046338558197}
+{"best_validation_psnr": 15.639548778533936, "epoch": 12, "global_step": 13, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.1756598949432373, "validation_psnr": 15.304891109466553, "validation_ssim": 0.6472436040639877}
+{"best_validation_psnr": 15.639548778533936, "epoch": 13, "global_step": 14, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.1512499898672104, "validation_psnr": 15.287424564361572, "validation_ssim": 0.6532576531171799}
+{"best_validation_psnr": 15.639548778533936, "epoch": 14, "global_step": 15, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.14541274309158325, "validation_psnr": 15.28696084022522, "validation_ssim": 0.6552829742431641}
+{"best_validation_psnr": 15.639548778533936, "epoch": 15, "global_step": 16, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.176969975233078, "validation_psnr": 15.313497543334961, "validation_ssim": 0.6540917754173279}
+{"best_validation_psnr": 15.639548778533936, "epoch": 16, "global_step": 17, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.14839953184127808, "validation_psnr": 15.33989691734314, "validation_ssim": 0.650596022605896}
+{"best_validation_psnr": 15.639548778533936, "epoch": 17, "global_step": 18, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.1334710568189621, "validation_psnr": 15.386823177337646, "validation_ssim": 0.6461685001850128}
+{"best_validation_psnr": 15.639548778533936, "epoch": 18, "global_step": 19, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.15515589714050293, "validation_psnr": 15.458555698394775, "validation_ssim": 0.6429196894168854}
+{"best_validation_psnr": 15.639548778533936, "epoch": 19, "global_step": 20, "is_best": false, "learning_rate": 0.0002, "train_loss": 0.1759335994720459, "validation_psnr": 15.547589778900146, "validation_ssim": 0.6396191418170929}
