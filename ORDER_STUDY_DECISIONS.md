@@ -655,3 +655,80 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated experiments: None.
 - Human approver: Repository owner
+
+
+---
+
+## Decision D-0023
+
+- Date: 2026-07-22
+- Status: Accepted
+- Decision: Remediate AMP overflow handling discovered during formal
+  seed-3407 baseline training.
+- Observed failure:
+  - seed 3407 completed four validation epochs;
+  - the last completed global_step was 3468;
+  - training then stopped because an unscaled parameter gradient was
+    non-finite;
+  - train loss and validation metrics were finite before the failure.
+- Root cause:
+  - the trainer calls a fatal finite-gradient assertion after
+    GradScaler.unscale_ and before GradScaler.step;
+  - this prevents GradScaler from skipping an overflowed optimizer update
+    and reducing its scale as intended.
+- Required remediation:
+  - AMP overflow must cause the affected optimizer update to be skipped;
+  - AMP scale must be updated normally;
+  - skipped optimizer updates must not increment global_step;
+  - non-AMP training must retain strict non-finite-gradient failure;
+  - finite-gradient clipping behavior must remain unchanged;
+  - overflow events must be observable in returned training-step metadata
+    and logs.
+- Frozen scientific configuration remains unchanged:
+  - model architecture;
+  - batch_size;
+  - patch_size;
+  - optimizer;
+  - learning rate;
+  - loss;
+  - formal manifests;
+  - seed;
+  - maximum epochs.
+- Existing seed-3407 checkpoints and failure evidence must be preserved.
+- Formal seed-3407 training may resume only after remediation tests and a
+  cloud runtime validation pass.
+- Next phase authorized: No.
+- Scientific semantics changed: No.
+- Invalidated completed experiments: None.
+- Human approver: Repository owner
+
+---
+
+## Decision D-0024
+
+- Date: 2026-07-22
+- Status: Accepted
+- Decision: Accept the static implementation of the AMP overflow handling
+  remediation and authorize cloud runtime validation.
+- Static remediation status:
+  IMPLEMENTED_NOT_CLOUD_RUNTIME_VALIDATED
+- Required runtime validation:
+  - run the complete pytest suite in the cloud PyTorch environment;
+  - run an explicit CUDA AMP overflow regression;
+  - verify that an overflowed optimizer update is skipped;
+  - verify that global_step is not incremented for a skipped update;
+  - verify that AMP scale decreases after overflow;
+  - verify that a later finite update succeeds;
+  - verify checkpoint compatibility using the interrupted seed-3407
+    checkpoint in a temporary resume probe;
+  - do not modify the existing interrupted formal run.
+- Existing interrupted run:
+  - remains preserved as failure evidence;
+  - is not a completed formal baseline experiment;
+  - must not be resumed as the final formal run.
+- Formal configuration remains unchanged.
+- Formal seed-3407 training is not yet authorized.
+- Next phase authorized: No.
+- Scientific semantics changed: No.
+- Invalidated completed experiments: None.
+- Human approver: Repository owner

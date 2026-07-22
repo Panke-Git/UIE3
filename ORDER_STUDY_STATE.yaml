@@ -19,8 +19,8 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B3b-1
-  name: baseline_formal_training_seed_3407
+  id: B3b-1r1c
+  name: amp_overflow_cloud_runtime_validation
   status: not_started
   authorized: true
   next_phase_authorized: false
@@ -29,43 +29,40 @@ phase_permissions:
   readable_paths:
     - NAFNet/**
     - UIE3/**
+    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407/**
     - /root/autodl-tmp/pro/publicdata/LSUI19_dup_train/**
 
   writable_paths:
-    - UIE3/configs/nafnet_small_lsui_formal_seed3407.yaml
-    - UIE3/reports/runtime/phase_b3b_seed3407/**
-    - UIE3/reports/PHASE_B3B_SEED3407_REPORT.md
-    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407/**
+    - UIE3/reports/runtime/phase_b3b_1r1c/**
+    - UIE3/reports/PHASE_B3B_1R1C_REPORT.md
+    - /tmp/UIE3_phase_b3b_1r1c/**
 
   forbidden_actions:
-    - modify_upstream_nafnet
-    - modify_vendored_nafnet
-    - modify_dataset_images
-    - modify_formal_split_manifests
     - modify_baseline_source_code
     - modify_tests
-    - modify_base_formal_config
+    - modify_formal_training_configs
+    - modify_formal_split_manifests
+    - modify_existing_seed_3407_run
+    - launch_formal_training
     - train_seed_1234
     - train_seed_2027
     - evaluate_final_test_set
     - implement_color_operator
     - implement_scattering_operator
     - implement_order_model
-    - implement_oracle_analysis
     - implement_router
     - auto_advance_phase
 
 
 phase_outputs:
   required:
-    - UIE3/configs/nafnet_small_lsui_formal_seed3407.yaml
-    - UIE3/reports/runtime/phase_b3b_seed3407/environment.txt
-    - UIE3/reports/runtime/phase_b3b_seed3407/train.log
-    - UIE3/reports/runtime/phase_b3b_seed3407/train_exit_code.txt
-    - UIE3/reports/runtime/phase_b3b_seed3407/best_validation.log
-    - UIE3/reports/runtime/phase_b3b_seed3407/best_validation_metrics.csv
-    - UIE3/reports/runtime/phase_b3b_seed3407/run_summary.json
-    - UIE3/reports/PHASE_B3B_SEED3407_REPORT.md
+    - UIE3/reports/runtime/phase_b3b_1r1c/environment.txt
+    - UIE3/reports/runtime/phase_b3b_1r1c/pytest.log
+    - UIE3/reports/runtime/phase_b3b_1r1c/pytest_exit_code.txt
+    - UIE3/reports/runtime/phase_b3b_1r1c/amp_cuda_regression.log
+    - UIE3/reports/runtime/phase_b3b_1r1c/resume_probe.log
+    - UIE3/reports/runtime/phase_b3b_1r1c/resume_probe_summary.json
+    - UIE3/reports/PHASE_B3B_1R1C_REPORT.md
 
   optional: []
 
