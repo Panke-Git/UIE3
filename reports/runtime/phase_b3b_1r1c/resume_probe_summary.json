@@ -1,0 +1,18 @@
+{
+  "phase": "B3b-1r1c",
+  "status": "PASS",
+  "source_checkpoint": "/tmp/UIE3_phase_b3b_1r1c/resume_source.pt",
+  "result_checkpoint": "/tmp/UIE3_phase_b3b_1r1c/resume_probe/last.pt",
+  "old_global_step": 3468,
+  "target_global_step": 3568,
+  "new_global_step": 3568,
+  "successful_updates_added": 100,
+  "model_state_present": true,
+  "optimizer_state_present": true,
+  "scaler_state_present": true,
+  "source_sha256": "4d14b6ee3435d4094547c9deb5d3a4998670db8619b52a5d8948e2541f126c52",
+  "result_sha256": "5a5c4001e3b6ddb32032320be0539ecd48be3052261a598c2548a14d9fc6d68e",
+  "formal_training_resumed": false,
+  "final_test_evaluated": false,
+  "purpose": "Temporary checkpoint compatibility and real-data resume validation only."
+}

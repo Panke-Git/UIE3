@@ -1,0 +1,4 @@
+AMP_OVERFLOW_DETECTED optimizer_step_applied=false global_step=0 amp_scale_before=65536.0 amp_scale_after=32768.0
+overflow_result: {'loss': 0.44486355781555176, 'learning_rate': 0.001, 'global_step': 0, 'optimizer_step_applied': False, 'amp_overflow_detected': True, 'amp_scale_before': 65536.0, 'amp_scale_after': 32768.0}
+finite_result: {'loss': 0.44486355781555176, 'learning_rate': 0.001, 'global_step': 1, 'optimizer_step_applied': True, 'amp_overflow_detected': False, 'amp_scale_before': 32768.0, 'amp_scale_after': 32768.0}
+CUDA AMP overflow regression: PASS

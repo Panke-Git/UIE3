@@ -1,0 +1,23 @@
+...................shape=(1, 3, 256, 256) max_abs_error=0 mean_abs_error=0 parameters=(2846755, 2846755)
+.shape=(2, 3, 128, 192) max_abs_error=0 mean_abs_error=0 parameters=(2846755, 2846755)
+.shape=(1, 3, 257, 259) max_abs_error=0 mean_abs_error=0 parameters=(2846755, 2846755)
+.........AMP_OVERFLOW_DETECTED optimizer_step_applied=false global_step=0 amp_scale_before=65536.0 amp_scale_after=32768.0
+...AMP_OVERFLOW_DETECTED optimizer_step_applied=false global_step=1 amp_scale_before=65536.0 amp_scale_after=32768.0
+.....................
+=============================== warnings summary ===============================
+tests/test_loss_metrics.py::test_charbonnier_known_value_and_finite_backward
+  /root/autodl-tmp/pro/UIE3_workspace/UIE3/tests/test_loss_metrics.py:21: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+  Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)
+    assert float(loss) == pytest.approx(1.0e-3)
+
+tests/test_nafnet_import.py: 32 warnings
+  /root/autodl-tmp/pro/UIE3_workspace/NAFNet/basicsr/models/archs/arch_util.py:282: DeprecationWarning: 'saved_variables' is deprecated; use 'saved_tensors'
+    y, var, weight = ctx.saved_variables
+
+tests/test_nafnet_import.py: 32 warnings
+tests/test_train_step.py: 96 warnings
+  /root/autodl-tmp/pro/UIE3_workspace/UIE3/third_party/nafnet/nafnet_arch.py:53: DeprecationWarning: 'saved_variables' is deprecated; use 'saved_tensors'
+    y, var, weight = ctx.saved_variables
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+54 passed, 161 warnings in 7.26s
