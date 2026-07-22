@@ -732,3 +732,61 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated completed experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0025
+
+- Date: 2026-07-23
+- Status: Accepted
+- Decision: Accept Phase B3b-1r1c cloud runtime validation of the AMP
+  overflow remediation.
+- Phase B3b-1r1c status: PASS
+- Accepted evidence:
+  - the complete cloud pytest suite passed;
+  - a real CUDA AMP overflowed optimizer update was skipped;
+  - model parameters did not change during the skipped update;
+  - global_step did not increase during the skipped update;
+  - AMP scale decreased after the overflow;
+  - a subsequent finite optimizer update succeeded;
+  - the interrupted seed-3407 checkpoint was strictly restored in a
+    temporary resume probe;
+  - model, optimizer and GradScaler states were present;
+  - final test was not evaluated.
+- Scientific configuration remains frozen:
+  - NAFNet-small;
+  - seed: 3407;
+  - patch_size: 256;
+  - batch_size: 4;
+  - num_workers: 4;
+  - AMP: true;
+  - AdamW;
+  - learning rate: 2.0e-4;
+  - weight decay: 0;
+  - maximum training length: 200 epochs;
+  - checkpoint selection: highest formal-validation RGB PSNR.
+- Authorized next phase:
+  Phase B3b-1r2 — restart formal seed-3407 training from epoch 0 using the
+  remediated trainer.
+- Formal-run policy:
+  - use the single remediated Git commit for the complete run;
+  - do not resume the interrupted pre-remediation run;
+  - use a new output directory;
+  - preserve the old interrupted run as diagnostic evidence;
+  - use only formal train and validation manifests;
+  - final test must not be evaluated.
+- New formal output directory:
+  /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407_r1
+- Explicitly not authorized:
+  - seed 1234 training;
+  - seed 2027 training;
+  - final test evaluation;
+  - source-code changes;
+  - formal-config changes;
+  - color or scattering operators;
+  - operator-order experiments;
+  - Oracle analysis;
+  - adaptive routing.
+- Scientific semantics changed: No.
+- Invalidated completed experiments: None.
+- Human approver: Repository owner

@@ -19,9 +19,9 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B3b-1r1c
-  name: amp_overflow_cloud_runtime_validation
-  status: in_progress
+  id: B3b-1r2
+  name: baseline_formal_training_seed_3407_restart
+  status: not_started
   authorized: true
   next_phase_authorized: false
 
@@ -29,40 +29,44 @@ phase_permissions:
   readable_paths:
     - NAFNet/**
     - UIE3/**
-    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407/**
     - /root/autodl-tmp/pro/publicdata/LSUI19_dup_train/**
+    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407/**
 
   writable_paths:
-    - UIE3/reports/runtime/phase_b3b_1r1c/**
-    - UIE3/reports/PHASE_B3B_1R1C_REPORT.md
-    - /tmp/UIE3_phase_b3b_1r1c/**
+    - UIE3/reports/runtime/phase_b3b_seed3407_r1/**
+    - UIE3/reports/PHASE_B3B_SEED3407_R1_REPORT.md
+    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407_r1/**
 
   forbidden_actions:
+    - modify_upstream_nafnet
+    - modify_vendored_nafnet
     - modify_baseline_source_code
     - modify_tests
     - modify_formal_training_configs
+    - modify_dataset_images
     - modify_formal_split_manifests
-    - modify_existing_seed_3407_run
-    - launch_formal_training
+    - modify_interrupted_seed_3407_run
+    - resume_interrupted_seed_3407_run
     - train_seed_1234
     - train_seed_2027
     - evaluate_final_test_set
     - implement_color_operator
     - implement_scattering_operator
     - implement_order_model
+    - implement_oracle_analysis
     - implement_router
     - auto_advance_phase
 
 
 phase_outputs:
   required:
-    - UIE3/reports/runtime/phase_b3b_1r1c/environment.txt
-    - UIE3/reports/runtime/phase_b3b_1r1c/pytest.log
-    - UIE3/reports/runtime/phase_b3b_1r1c/pytest_exit_code.txt
-    - UIE3/reports/runtime/phase_b3b_1r1c/amp_cuda_regression.log
-    - UIE3/reports/runtime/phase_b3b_1r1c/resume_probe.log
-    - UIE3/reports/runtime/phase_b3b_1r1c/resume_probe_summary.json
-    - UIE3/reports/PHASE_B3B_1R1C_REPORT.md
+    - UIE3/reports/runtime/phase_b3b_seed3407_r1/environment.txt
+    - UIE3/reports/runtime/phase_b3b_seed3407_r1/train.log
+    - UIE3/reports/runtime/phase_b3b_seed3407_r1/train_exit_code.txt
+    - UIE3/reports/runtime/phase_b3b_seed3407_r1/best_validation.log
+    - UIE3/reports/runtime/phase_b3b_seed3407_r1/best_validation_metrics.csv
+    - UIE3/reports/runtime/phase_b3b_seed3407_r1/run_summary.json
+    - UIE3/reports/PHASE_B3B_SEED3407_R1_REPORT.md
 
   optional: []
 
