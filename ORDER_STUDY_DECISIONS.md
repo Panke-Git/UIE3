@@ -790,3 +790,48 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated completed experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0026
+
+- Date: 2026-07-23
+- Status: Accepted
+- Decision: Accept the completed formal NAFNet-small baseline run for seed
+  3407.
+- Phase B3b-1r2 status: PASS
+- Accepted seed-3407 evidence:
+  - the run started from epoch 0 using the remediated trainer;
+  - 200 epochs, indexed 0 through 199, completed;
+  - train exit code was 0;
+  - the interrupted pre-remediation run was not resumed;
+  - best.pt was selected using the highest formal-validation RGB PSNR;
+  - best checkpoint: epoch 192, global_step 167267;
+  - last checkpoint: epoch 199, global_step 173334;
+  - the complete 385-sample formal validation set was evaluated;
+  - mean RGB PSNR: 27.319515354602366;
+  - mean RGB SSIM: 0.8942945567044345;
+  - all per-image metrics were finite;
+  - final test was not evaluated.
+- Interpretation:
+  - this is the completed formal validation result for seed 3407 only;
+  - it is not yet the three-seed baseline result.
+- Authorized next phase:
+  Phase B3b-2 — formal NAFNet-small baseline training for seed 1234.
+- Frozen protocol:
+  - model, loss, optimizer, learning rate, data manifests, augmentation,
+    batch size, patch size, AMP and maximum epoch budget remain unchanged;
+  - checkpoint selection remains highest formal-validation RGB PSNR;
+  - final test must not participate in training or checkpoint selection.
+- Explicitly not authorized:
+  - seed 2027 training;
+  - final test evaluation;
+  - source-code changes;
+  - formal-protocol changes;
+  - color or scattering operators;
+  - operator-order experiments;
+  - Oracle analysis;
+  - adaptive routing.
+- Scientific semantics changed: No.
+- Invalidated experiments: None.
+- Human approver: Repository owner
