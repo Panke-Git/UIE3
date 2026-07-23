@@ -1,0 +1,16 @@
+phase: B3b-1r2
+seed: 3407
+run_origin: epoch_0_restart
+interrupted_run_resumed: false
+platform: Linux-5.15.0-139-generic-x86_64-with-glibc2.35
+python: 3.12.13 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:38:16) [GCC 14.3.0]
+python_executable: /root/miniconda3/envs/pax/bin/python
+torch: 2.13.0+cu126
+torch_cuda_runtime: 12.6
+cuda_available: True
+gpu: NVIDIA GeForce RTX 3090
+cudnn: 91002
+git_commit: 79682aafff31fec602921acc63ad07faa9710938
+config_sha256: ee812ff2c6621a9e01691e016b497eaf94af152320d141b80d69209abd917e80
+dataset_root: /root/autodl-tmp/pro/publicdata/LSUI19_dup_train
+output_dir: /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407_r1

@@ -1,0 +1,58 @@
+{
+  "phase": "B3b-1r2",
+  "status": "FORMAL_SEED_RUN_COMPLETED",
+  "formal_experiment": true,
+  "seed": 3407,
+  "run_origin": "epoch_0_restart",
+  "interrupted_pre_remediation_run_resumed": false,
+  "final_test_evaluated": false,
+  "git_commit_current": "79682aafff31fec602921acc63ad07faa9710938",
+  "git_commit_best_checkpoint": "79682aafff31fec602921acc63ad07faa9710938",
+  "git_commit_last_checkpoint": "79682aafff31fec602921acc63ad07faa9710938",
+  "config_path": "configs/nafnet_small_lsui_formal_seed3407.yaml",
+  "config_sha256": "ee812ff2c6621a9e01691e016b497eaf94af152320d141b80d69209abd917e80",
+  "dataset_root": "/root/autodl-tmp/pro/publicdata/LSUI19_dup_train",
+  "train_manifest": "splits/lsui19/train.tsv",
+  "validation_manifest": "splits/lsui19/validation.tsv",
+  "train_exit_code": 0,
+  "train_elapsed_seconds": 24879,
+  "logged_epoch_records": 200,
+  "best_checkpoint": {
+    "path": "/root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407_r1/best.pt",
+    "sha256": "81d15252045ff96bf3c241a580ec35076eea035b7bdafe9c8cb1393c827fdd81",
+    "size_bytes": 34523299,
+    "epoch": 192,
+    "global_step": 167267,
+    "best_validation_psnr": 27.319525305017248,
+    "model_state_present": true,
+    "optimizer_state_present": true,
+    "scaler_state_present": true
+  },
+  "last_checkpoint": {
+    "path": "/root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407_r1/last.pt",
+    "sha256": "6784564c41728993839808465ffc97b3d97acf615af06787e7a2e495201782cd",
+    "size_bytes": 34523299,
+    "epoch": 199,
+    "global_step": 173334,
+    "best_validation_psnr": 27.319525305017248,
+    "model_state_present": true,
+    "optimizer_state_present": true,
+    "scaler_state_present": true
+  },
+  "best_checkpoint_validation": {
+    "exit_code": 0,
+    "elapsed_seconds": 21,
+    "num_samples": 385,
+    "mean_psnr_rgb": 27.319515354602366,
+    "mean_ssim_rgb": 0.8942945567044345,
+    "all_metrics_finite": true,
+    "per_image_csv": "reports/runtime/phase_b3b_seed3407_r1/best_validation_metrics.csv"
+  },
+  "checkpoint_selection_rule": "highest formal-validation RGB PSNR",
+  "limitations": [
+    "This is the completed formal result for seed 3407 only.",
+    "Seeds 1234 and 2027 have not yet been completed.",
+    "No final-test evaluation was performed.",
+    "Three-seed mean and standard deviation are not yet available."
+  ]
+}

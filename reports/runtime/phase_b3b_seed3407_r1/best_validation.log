@@ -1,0 +1,16 @@
+RUN_MODE=FORMAL
+FORMAL_EXPERIMENT=true
+{
+  "actual_validation_manifest": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/splits/lsui19/validation.tsv",
+  "formal_experiment": true,
+  "mean_psnr_rgb": 27.319515354602366,
+  "mean_ssim_rgb": 0.8942945567044345,
+  "num_samples": 385,
+  "output_csv": "/root/autodl-tmp/pro/UIE3_workspace/UIE3/reports/runtime/phase_b3b_seed3407_r1/best_validation_metrics.csv",
+  "run_mode": "formal",
+  "split": "validation"
+}
+validation_elapsed_seconds=21
+validation_exit_code=0
+checkpoint=/root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407_r1/best.pt
+final_test_evaluated=false
