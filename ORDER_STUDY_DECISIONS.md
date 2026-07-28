@@ -835,3 +835,36 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0027
+
+- Date: 2026-07-24
+- Status: Accepted
+- Decision: Complete missing formal-run archival artifacts for seeds 3407
+  and 1234 before authorizing seed 2027.
+- Reason:
+  - seed 3407 formal training and validation completed successfully, but
+    run_summary.json was not committed;
+  - seed 1234 formal training and validation completed successfully, but
+    run_summary.json and the formal phase report were not completed;
+  - the checkpoint files are available from a verified local backup and
+    may be restored temporarily for metadata extraction.
+- Authorized remedial phase:
+  Phase B3b-2r1 — formal seed archive completion.
+- Authorized outputs:
+  - reports/runtime/phase_b3b_seed3407_r1/run_summary.json
+  - reports/runtime/phase_b3b_seed1234/run_summary.json
+  - reports/PHASE_B3B_SEED1234_REPORT.md
+- Temporarily authorized checkpoint restoration:
+  - seed_3407_r1/best.pt
+  - seed_3407_r1/last.pt
+  - seed_1234/best.pt
+  - seed_1234/last.pt
+- No training or evaluation is authorized.
+- Final test evaluation is not authorized.
+- Seed 2027 is not yet authorized.
+- Scientific configuration changed: No.
+- Existing formal results invalidated: No.
+- Human approver: Repository owner
