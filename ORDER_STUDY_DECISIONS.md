@@ -868,3 +868,61 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific configuration changed: No.
 - Existing formal results invalidated: No.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0028
+
+- Date: 2026-07-29
+- Status: Accepted
+- Decision: Accept Phase B3b-2r1 formal seed archive completion.
+- Phase B3b-2r1 status: PASS
+- Accepted evidence:
+  - seed 3407 run_summary.json is complete;
+  - seed 1234 run_summary.json is complete;
+  - the formal seed 1234 report passed all acceptance criteria;
+  - seed 3407 and seed 1234 each completed the frozen 200-epoch
+    formal training budget;
+  - both seeds were independently evaluated on the complete
+    385-sample formal validation set;
+  - final test was not evaluated.
+- Accepted formal-validation results:
+  - seed 3407:
+    - mean RGB PSNR: 27.319515354602366;
+    - mean RGB SSIM: 0.8942945567044345;
+  - seed 1234:
+    - mean RGB PSNR: 27.334599338878284;
+    - mean RGB SSIM: 0.8927693091429674.
+- Authorized next phase:
+  Phase B3b-3 — formal NAFNet-small baseline training for seed 2027.
+- Frozen protocol:
+  - NAFNet-small architecture;
+  - formal train and validation manifests;
+  - patch_size: 256;
+  - batch_size: 4;
+  - num_workers: 4;
+  - AMP: true;
+  - Charbonnier loss;
+  - AdamW;
+  - learning rate: 2.0e-4;
+  - weight decay: 0;
+  - maximum training budget: 200 epochs;
+  - checkpoint selection: highest formal-validation RGB PSNR.
+- Checkpoint archival policy:
+  - best.pt and last.pt must remain available until validation,
+    run_summary.json and the formal seed-2027 report are complete;
+  - periodic checkpoints may be deleted only after successful archival.
+- Explicitly not authorized:
+  - final test evaluation;
+  - source-code changes;
+  - formal-config changes other than seed-2027 configuration
+    instantiation;
+  - split-manifest changes;
+  - color operator implementation;
+  - scattering operator implementation;
+  - operator-order experiments;
+  - Oracle analysis;
+  - adaptive routing.
+- Scientific semantics changed: No.
+- Invalidated completed experiments: None.
+- Human approver: Repository owner
