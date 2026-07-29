@@ -1,0 +1,124 @@
+{
+  "phase": "B3b-4",
+  "status": "PASS",
+  "seeds": [
+    3407,
+    1234,
+    2027
+  ],
+  "num_seeds": 3,
+  "validation_samples_per_seed": 385,
+  "total_seed_sample_evaluations": 1155,
+  "primary_std_definition": "sample standard deviation, denominator n-1, ddof=1",
+  "psnr_rgb": {
+    "values_by_seed": {
+      "3407": 27.319515354602366,
+      "1234": 27.334599338878284,
+      "2027": 27.039529166283547
+    },
+    "mean": 27.2312146199214,
+    "sample_std_ddof1": 0.16617570971014672,
+    "population_std_ddof0": 0.1356818988115731,
+    "min": 27.039529166283547,
+    "max": 27.334599338878284,
+    "range": 0.29507017259473756
+  },
+  "ssim_rgb": {
+    "values_by_seed": {
+      "3407": 0.8942945567044345,
+      "1234": 0.8927693091429674,
+      "2027": 0.8912330272909883
+    },
+    "mean": 0.8927656310461302,
+    "sample_std_ddof1": 0.0015307680208464887,
+    "population_std_ddof0": 0.00124986685521466,
+    "min": 0.8912330272909883,
+    "max": 0.8942945567044345,
+    "range": 0.0030615294134461735
+  },
+  "protocol_consistency": {
+    "passed": true,
+    "recursive_config_comparison": true,
+    "removed_before_comparison": [
+      "experiment.name",
+      "experiment.seed"
+    ],
+    "configs_equal_after_allowed_removals": true,
+    "only_pairwise_config_differences": [
+      "experiment.name",
+      "experiment.seed"
+    ],
+    "config_sha256_equality_required": false,
+    "nafnet_small_structure_consistent": true,
+    "train_manifest_consistent": true,
+    "validation_manifest_consistent": true,
+    "patch_size_256": true,
+    "batch_size_4": true,
+    "num_workers_4": true,
+    "augmentation_consistent": true,
+    "charbonnier_loss_consistent": true,
+    "adamw_consistent": true,
+    "learning_rate_2e-4": true,
+    "weight_decay_0": true,
+    "amp_true": true,
+    "epochs_200": true,
+    "validate_every_1": true,
+    "checkpoint_selection_rule_consistent": true
+  },
+  "csv_sample_alignment": {
+    "passed": true,
+    "rows_per_seed": {
+      "3407": 385,
+      "1234": 385,
+      "2027": 385
+    },
+    "sample_id_sets_equal": true,
+    "input_relative_path_mappings_equal": true,
+    "gt_relative_path_mappings_equal": true,
+    "duplicate_sample_ids_by_seed": {
+      "3407": 0,
+      "1234": 0,
+      "2027": 0
+    }
+  },
+  "csv_mean_recalculation": {
+    "absolute_tolerance": 1e-10,
+    "all_consistent_with_run_summary": true,
+    "absolute_differences_by_seed": {
+      "3407": {
+        "mean_psnr_rgb": 0.0,
+        "mean_ssim_rgb": 0.0
+      },
+      "1234": {
+        "mean_psnr_rgb": 0.0,
+        "mean_ssim_rgb": 0.0
+      },
+      "2027": {
+        "mean_psnr_rgb": 0.0,
+        "mean_ssim_rgb": 0.0
+      }
+    }
+  },
+  "all_formal_seed_reports_pass": true,
+  "all_run_summaries_valid": true,
+  "all_metrics_finite": true,
+  "all_training_exit_codes_zero": true,
+  "all_validation_exit_codes_zero": true,
+  "all_logged_epoch_records_200": true,
+  "all_checkpoint_states_complete": true,
+  "all_checkpoint_metrics_consistent": true,
+  "all_final_test_evaluated_false": true,
+  "seed_selection_or_exclusion_performed": false,
+  "checkpoint_selection_rule": "highest formal-validation RGB PSNR",
+  "limitations": [
+    "尚未获得final test结果。",
+    "validation聚合不是final test结果。",
+    "不能从三个seed中择优选择一个作为最终baseline。",
+    "尚未验证颜色与散射逆算子。",
+    "尚未验证算子非交换性。",
+    "尚未验证Oracle gap。",
+    "尚未验证自适应router。"
+  ],
+  "final_test_evaluated": false,
+  "next_phase_authorized": false
+}
