@@ -986,3 +986,55 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated completed experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0030
+
+- Date: 2026-07-29
+- Status: Accepted
+- Decision: Accept Phase B3b-4 three-seed formal-validation aggregation.
+- Phase B3b-4 status: PASS
+- Accepted evidence:
+  - formal seeds 3407, 1234 and 2027 all completed;
+  - all three runs used the frozen NAFNet-small protocol;
+  - all three independently evaluated the same 385 validation samples;
+  - the three configurations differed only in experiment name and seed;
+  - all per-image validation metrics were finite;
+  - the primary variability statistic used sample standard deviation
+    with denominator n-1, ddof=1;
+  - no seed was selected or excluded;
+  - final test was not evaluated.
+- Authorized next phase:
+  Phase B3b-5 — one-time formal final-test evaluation of the three
+  validation-selected best checkpoints and three-seed test aggregation.
+- Authorized checkpoints:
+  - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407_r1/best.pt
+  - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_1234/best.pt
+  - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_2027/best.pt
+- Final-test policy:
+  - evaluate all three pre-specified seeds;
+  - use only each seed's previously validation-selected best.pt;
+  - evaluate the complete formal test manifest exactly as frozen;
+  - do not select, exclude or rank seeds based on test performance;
+  - do not alter checkpoints after observing test results;
+  - aggregate seed-level test metrics using arithmetic mean and sample
+    standard deviation with ddof=1;
+  - preserve full-precision machine-readable results.
+- Explicitly not authorized:
+  - additional training;
+  - validation-based reselection;
+  - test-based checkpoint selection;
+  - test-based hyperparameter tuning;
+  - source-code changes;
+  - configuration changes;
+  - manifest changes;
+  - data changes;
+  - color operator implementation;
+  - scattering operator implementation;
+  - operator-order experiments;
+  - Oracle analysis;
+  - adaptive routing.
+- Scientific semantics changed: No.
+- Invalidated completed experiments: None.
+- Human approver: Repository owner

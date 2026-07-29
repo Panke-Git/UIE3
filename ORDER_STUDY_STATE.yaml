@@ -19,8 +19,8 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B3b-4
-  name: baseline_three_seed_validation_aggregation
+  id: B3b-5
+  name: baseline_three_seed_final_test_evaluation
   status: not_started
   authorized: true
   next_phase_authorized: false
@@ -28,33 +28,26 @@ current_phase:
 
 phase_permissions:
   readable_paths:
-    - UIE3/ORDER_STUDY_PROTOCOL.md
-    - UIE3/ORDER_STUDY_DECISIONS.md
-    - UIE3/ORDER_STUDY_STATE.yaml
-    - UIE3/configs/nafnet_small_lsui_formal_seed3407.yaml
-    - UIE3/configs/nafnet_small_lsui_formal_seed1234.yaml
-    - UIE3/configs/nafnet_small_lsui_formal_seed2027.yaml
-    - UIE3/reports/PHASE_B3B_SEED3407_R1_REPORT.md
-    - UIE3/reports/PHASE_B3B_SEED1234_REPORT.md
-    - UIE3/reports/PHASE_B3B_SEED2027_REPORT.md
-    - UIE3/reports/runtime/phase_b3b_seed3407_r1/**
-    - UIE3/reports/runtime/phase_b3b_seed1234/**
-    - UIE3/reports/runtime/phase_b3b_seed2027/**
+    - UIE3/**
+    - /root/autodl-tmp/pro/publicdata/LSUI19_dup_train/**
+    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_3407_r1/best.pt
+    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_1234/best.pt
+    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_2027/best.pt
 
   writable_paths:
-    - UIE3/reports/runtime/phase_b3b_4/**
-    - UIE3/reports/PHASE_B3B_THREE_SEED_VALIDATION_REPORT.md
+    - UIE3/reports/runtime/phase_b3b_5/**
+    - UIE3/reports/PHASE_B3B_THREE_SEED_FINAL_TEST_REPORT.md
 
   forbidden_actions:
     - run_training
-    - run_validation
-    - evaluate_final_test_set
     - modify_source_code
     - modify_tests
     - modify_formal_configs
     - modify_split_manifests
-    - select_best_seed
-    - discard_seed
+    - modify_dataset_images
+    - select_seed_by_test_performance
+    - select_checkpoint_by_test_performance
+    - tune_hyperparameters_using_test
     - implement_color_operator
     - implement_scattering_operator
     - implement_order_model
@@ -65,11 +58,16 @@ phase_permissions:
 
 phase_outputs:
   required:
-    - UIE3/reports/runtime/phase_b3b_4/three_seed_validation_metrics.csv
-    - UIE3/reports/runtime/phase_b3b_4/three_seed_validation_summary.json
-    - UIE3/reports/PHASE_B3B_THREE_SEED_VALIDATION_REPORT.md
-
-  optional: []
+    - UIE3/reports/runtime/phase_b3b_5/preflight.json
+    - UIE3/reports/runtime/phase_b3b_5/seed_3407_test.log
+    - UIE3/reports/runtime/phase_b3b_5/seed_3407_test_metrics.csv
+    - UIE3/reports/runtime/phase_b3b_5/seed_1234_test.log
+    - UIE3/reports/runtime/phase_b3b_5/seed_1234_test_metrics.csv
+    - UIE3/reports/runtime/phase_b3b_5/seed_2027_test.log
+    - UIE3/reports/runtime/phase_b3b_5/seed_2027_test_metrics.csv
+    - UIE3/reports/runtime/phase_b3b_5/three_seed_test_metrics.csv
+    - UIE3/reports/runtime/phase_b3b_5/three_seed_test_summary.json
+    - UIE3/reports/PHASE_B3B_THREE_SEED_FINAL_TEST_REPORT.md
 
 
 phase_acceptance:
