@@ -1,0 +1,66 @@
+{
+  "phase": "B3b-3",
+  "status": "FORMAL_SEED_RUN_COMPLETED",
+  "formal_experiment": true,
+  "seed": 2027,
+  "run_origin": "epoch_0",
+  "final_test_evaluated": false,
+  "git_commit_current": "f0a802e2bbd82ed8621c8f01087d36d8c09d680e",
+  "git_commit_best_checkpoint": "f0a802e2bbd82ed8621c8f01087d36d8c09d680e",
+  "git_commit_last_checkpoint": "f0a802e2bbd82ed8621c8f01087d36d8c09d680e",
+  "config_path": "configs/nafnet_small_lsui_formal_seed2027.yaml",
+  "config_sha256": "e82e17d95822da8b64e5439c3bdf8bc75defd015fa1c06588c26e4ad8fc024dc",
+  "dataset_root": "/root/autodl-tmp/pro/publicdata/LSUI19_dup_train",
+  "train_manifest": "splits/lsui19/train.tsv",
+  "validation_manifest": "splits/lsui19/validation.tsv",
+  "train_exit_code": 0,
+  "train_elapsed_seconds": 24634,
+  "logged_epoch_records": 200,
+  "completed_epoch_range": {
+    "first_epoch": 0,
+    "last_epoch": 199,
+    "num_epochs": 200
+  },
+  "best_checkpoint": {
+    "path": "/root/autodl-tmp/pro/UIE3_runs/b3b/seed_2027/best.pt",
+    "sha256": "29814cd2c0ab7e893d0bd329ded2c9875840ab8c51d0163e412a63297023c0f0",
+    "size_bytes": 34523299,
+    "epoch": 188,
+    "global_step": 163799,
+    "best_validation_psnr": 27.03952445736179,
+    "model_state_present": true,
+    "optimizer_state_present": true,
+    "scaler_state_present": true
+  },
+  "last_checkpoint": {
+    "path": "/root/autodl-tmp/pro/UIE3_runs/b3b/seed_2027/last.pt",
+    "sha256": "3fda66ab0eaa4449d499fd05834533465e8aa8231b5239aa534ceedc037fb372",
+    "size_bytes": 34523299,
+    "epoch": 199,
+    "global_step": 173334,
+    "best_validation_psnr": 27.03952445736179,
+    "model_state_present": true,
+    "optimizer_state_present": true,
+    "scaler_state_present": true
+  },
+  "best_checkpoint_validation": {
+    "exit_code": 0,
+    "elapsed_seconds": 21,
+    "num_samples": 385,
+    "mean_psnr_rgb": 27.039529166283547,
+    "mean_ssim_rgb": 0.8912330272909883,
+    "all_metrics_finite": true,
+    "per_image_csv": "reports/runtime/phase_b3b_seed2027/best_validation_metrics.csv",
+    "checkpoint_selection_psnr": 27.03952445736179,
+    "offline_csv_mean_psnr_rgb": 27.039529166283547,
+    "checkpoint_csv_psnr_abs_difference": 4.708921757412554e-06,
+    "consistency_tolerance_db": 0.0001,
+    "consistent_with_checkpoint_metric": true
+  },
+  "checkpoint_selection_rule": "highest formal-validation RGB PSNR",
+  "limitations": [
+    "This is the completed formal result for seed 2027 only.",
+    "No final-test evaluation was performed.",
+    "Three-seed validation aggregation has not yet been completed."
+  ]
+}
