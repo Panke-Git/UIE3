@@ -926,3 +926,63 @@ Do not delete earlier entries. Append new entries chronologically.
 - Scientific semantics changed: No.
 - Invalidated completed experiments: None.
 - Human approver: Repository owner
+
+---
+
+## Decision D-0029
+
+- Date: 2026-07-29
+- Status: Accepted
+- Decision: Accept the completed formal NAFNet-small baseline run for
+  seed 2027.
+- Phase B3b-3 status: PASS
+- Accepted evidence:
+  - seed 2027 completed the frozen 200-epoch formal training budget;
+  - train exit code was 0;
+  - best.pt and last.pt contained complete model, optimizer and
+    GradScaler states;
+  - best.pt was selected using the highest formal-validation RGB PSNR;
+  - the complete 385-sample formal validation set was independently
+    evaluated;
+  - all per-image PSNR and SSIM values were finite;
+  - the independently aggregated CSV PSNR was consistent with the
+    checkpoint-selection PSNR within the frozen 1e-4 dB archival
+    tolerance;
+  - final test was not evaluated.
+- Completed formal seeds:
+  - 3407;
+  - 1234;
+  - 2027.
+- Authorized next phase:
+  Phase B3b-4 — aggregate the three completed formal-validation runs.
+- Aggregation policy:
+  - no seed may be selected or discarded based on performance;
+  - seed-level metrics must be taken from each independently evaluated
+    best-validation CSV;
+  - the three validation CSV files must contain the same 385 samples;
+  - primary variability measure: sample standard deviation with
+    denominator n-1, equivalent to ddof=1;
+  - population standard deviation with ddof=0 may also be retained in
+    machine-readable evidence, but must not replace the declared primary
+    statistic;
+  - full-precision values must be retained in JSON;
+  - no final-test result may be generated or inferred.
+- Authorized outputs:
+  - reports/runtime/phase_b3b_4/three_seed_validation_metrics.csv
+  - reports/runtime/phase_b3b_4/three_seed_validation_summary.json
+  - reports/PHASE_B3B_THREE_SEED_VALIDATION_REPORT.md
+- Explicitly not authorized:
+  - training;
+  - checkpoint evaluation;
+  - final test evaluation;
+  - seed selection;
+  - source-code changes;
+  - configuration changes;
+  - manifest changes;
+  - color or scattering operators;
+  - operator-order experiments;
+  - Oracle analysis;
+  - adaptive routing.
+- Scientific semantics changed: No.
+- Invalidated completed experiments: None.
+- Human approver: Repository owner

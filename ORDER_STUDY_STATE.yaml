@@ -19,32 +19,42 @@ git:
   notes: "Phase A must record current status; it must not overwrite existing user changes."
 
 current_phase:
-  id: B3b-3
-  name: baseline_formal_training_seed_2027
+  id: B3b-4
+  name: baseline_three_seed_validation_aggregation
   status: not_started
   authorized: true
   next_phase_authorized: false
 
+
 phase_permissions:
   readable_paths:
-    - NAFNet/**
-    - UIE3/**
-    - /root/autodl-tmp/pro/publicdata/LSUI19_dup_train/**
+    - UIE3/ORDER_STUDY_PROTOCOL.md
+    - UIE3/ORDER_STUDY_DECISIONS.md
+    - UIE3/ORDER_STUDY_STATE.yaml
+    - UIE3/configs/nafnet_small_lsui_formal_seed3407.yaml
+    - UIE3/configs/nafnet_small_lsui_formal_seed1234.yaml
+    - UIE3/configs/nafnet_small_lsui_formal_seed2027.yaml
+    - UIE3/reports/PHASE_B3B_SEED3407_R1_REPORT.md
+    - UIE3/reports/PHASE_B3B_SEED1234_REPORT.md
+    - UIE3/reports/PHASE_B3B_SEED2027_REPORT.md
+    - UIE3/reports/runtime/phase_b3b_seed3407_r1/**
+    - UIE3/reports/runtime/phase_b3b_seed1234/**
+    - UIE3/reports/runtime/phase_b3b_seed2027/**
 
   writable_paths:
-    - UIE3/configs/nafnet_small_lsui_formal_seed2027.yaml
-    - UIE3/reports/runtime/phase_b3b_seed2027/**
-    - UIE3/reports/PHASE_B3B_SEED2027_REPORT.md
-    - /root/autodl-tmp/pro/UIE3_runs/b3b/seed_2027/**
+    - UIE3/reports/runtime/phase_b3b_4/**
+    - UIE3/reports/PHASE_B3B_THREE_SEED_VALIDATION_REPORT.md
 
   forbidden_actions:
-    - modify_upstream_nafnet
-    - modify_vendored_nafnet
-    - modify_baseline_source_code
-    - modify_tests
-    - modify_dataset_images
-    - modify_formal_split_manifests
+    - run_training
+    - run_validation
     - evaluate_final_test_set
+    - modify_source_code
+    - modify_tests
+    - modify_formal_configs
+    - modify_split_manifests
+    - select_best_seed
+    - discard_seed
     - implement_color_operator
     - implement_scattering_operator
     - implement_order_model
@@ -55,14 +65,9 @@ phase_permissions:
 
 phase_outputs:
   required:
-    - UIE3/configs/nafnet_small_lsui_formal_seed2027.yaml
-    - UIE3/reports/runtime/phase_b3b_seed2027/environment.txt
-    - UIE3/reports/runtime/phase_b3b_seed2027/train.log
-    - UIE3/reports/runtime/phase_b3b_seed2027/train_exit_code.txt
-    - UIE3/reports/runtime/phase_b3b_seed2027/best_validation.log
-    - UIE3/reports/runtime/phase_b3b_seed2027/best_validation_metrics.csv
-    - UIE3/reports/runtime/phase_b3b_seed2027/run_summary.json
-    - UIE3/reports/PHASE_B3B_SEED2027_REPORT.md
+    - UIE3/reports/runtime/phase_b3b_4/three_seed_validation_metrics.csv
+    - UIE3/reports/runtime/phase_b3b_4/three_seed_validation_summary.json
+    - UIE3/reports/PHASE_B3B_THREE_SEED_VALIDATION_REPORT.md
 
   optional: []
 
